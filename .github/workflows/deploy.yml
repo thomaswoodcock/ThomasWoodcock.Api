@@ -4,6 +4,10 @@ on:
   push:
     branches: [ master ]
 
+env:
+  PROJECT_PATH: 'src/ThomasWoodcock.Api/ThomasWoodcock.Api.csproj'
+  PUBLISH_PATH: './publish'
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -20,13 +24,13 @@ jobs:
 
       - name: Build and Publish
         run: |
-          dotnet restore src/ThomasWoodcock.Api/ThomasWoodcock.Api.csproj
-          dotnet build src/ThomasWoodcock.Api/ThomasWoodcock.Api.csproj --configuration Release
-          dotnet publish src/ThomasWoodcock.Api/ThomasWoodcock.Api.csproj -c Release -o './publish' 
+          dotnet restore ${{ env.PROJECT_PATH }}
+          dotnet build ${{ env.PROJECT_PATH }} --configuration Release
+          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o ${{ env.PUBLISH_PATH }} 
           
       - name: Deploy
         uses: azure/webapps-deploy@v2
         with: 
           app-name: ThomasWoodcockApi
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }}
-          package: './publish'
+          package: ${{ env.PUBLISH_PATH }}
