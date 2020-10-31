@@ -53,12 +53,15 @@ namespace ThomasWoodcock.Domain.SeedWork
         /// </remarks>
         public override bool Equals(object obj)
         {
-            if (obj == null || obj.GetType() != GetType())
+            if (obj == null || !(obj is ValueObject other))
             {
                 return false;
             }
 
-            var other = (ValueObject)obj;
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
 
             return this.GetEqualityComponents()
                        .SequenceEqual(other.GetEqualityComponents());
