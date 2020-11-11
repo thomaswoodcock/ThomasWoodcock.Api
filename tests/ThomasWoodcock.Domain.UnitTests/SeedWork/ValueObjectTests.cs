@@ -28,8 +28,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void TwoValueObjectsWithSamePropertyValues_EqualOperator_ReturnsTrue()
             {
                 // Arrange
-                var objectOne = new TestValueObject(5);
-                var objectTwo = new TestValueObject(5);
+                TestValueObject objectOne = new(5);
+                TestValueObject objectTwo = new(5);
 
                 // Act
                 bool result = objectOne == objectTwo;
@@ -42,8 +42,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void TwoValueObjectsWithDifferentPropertyValues_EqualOperator_ReturnsFalse()
             {
                 // Arrange
-                var objectOne = new TestValueObject(5);
-                var objectTwo = new TestValueObject(9);
+                TestValueObject objectOne = new(5);
+                TestValueObject objectTwo = new(9);
 
                 // Act
                 bool result = objectOne == objectTwo;
@@ -57,7 +57,7 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             {
                 // Arrange
                 TestValueObject objectOne = null;
-                var objectTwo = new TestValueObject(5);
+                TestValueObject objectTwo = new(5);
 
                 // Act
                 bool result = objectOne == objectTwo;
@@ -70,7 +70,7 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void NullRightOperand_EqualOperator_ReturnsFalse()
             {
                 // Arrange
-                var objectOne = new TestValueObject(5);
+                TestValueObject objectOne = new(5);
                 TestValueObject objectTwo = null;
 
                 // Act
@@ -84,8 +84,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void ObjectOfDifferentType_EqualOperator_ReturnsFalse()
             {
                 // Arrange
-                var objectOne = new TestValueObject(5);
-                var objectTwo = new AnotherTestValueObject("Test", "Values");
+                TestValueObject objectOne = new(5);
+                AnotherTestValueObject objectTwo = new("Test", "Values");
 
                 // Act
                 bool result = objectOne == objectTwo;
@@ -115,8 +115,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void TwoValueObjectsWithSamePropertyValues_NotEqualOperator_ReturnsFalse()
             {
                 // Arrange
-                var objectOne = new TestValueObject(5);
-                var objectTwo = new TestValueObject(5);
+                TestValueObject objectOne = new(5);
+                TestValueObject objectTwo = new(5);
 
                 // Act
                 bool result = objectOne != objectTwo;
@@ -129,8 +129,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void TwoValueObjectsWithDifferentPropertyValues_NotEqualOperator_ReturnsTrue()
             {
                 // Arrange
-                var objectOne = new TestValueObject(5);
-                var objectTwo = new TestValueObject(9);
+                TestValueObject objectOne = new(5);
+                TestValueObject objectTwo = new(9);
 
                 // Act
                 bool result = objectOne != objectTwo;
@@ -144,7 +144,7 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             {
                 // Arrange
                 TestValueObject objectOne = null;
-                var objectTwo = new TestValueObject(5);
+                TestValueObject objectTwo = new(5);
 
                 // Act
                 bool result = objectOne != objectTwo;
@@ -157,7 +157,7 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void NullRightOperand_NotEqualOperator_ReturnsTrue()
             {
                 // Arrange
-                var objectOne = new TestValueObject(5);
+                TestValueObject objectOne = new(5);
                 TestValueObject objectTwo = null;
 
                 // Act
@@ -171,8 +171,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void ObjectOfDifferentType_NotEqualOperator_ReturnsTrue()
             {
                 // Arrange
-                var objectOne = new TestValueObject(5);
-                var objectTwo = new AnotherTestValueObject("Test", "Values");
+                TestValueObject objectOne = new(5);
+                AnotherTestValueObject objectTwo = new("Test", "Values");
 
                 // Act
                 bool result = objectOne != objectTwo;
@@ -188,7 +188,7 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void NullObject_Equals_ReturnsFalse()
             {
                 // Arrange
-                var valueObject = new TestValueObject(5);
+                TestValueObject valueObject = new(5);
 
                 // Act
                 bool result = valueObject.Equals(null);
@@ -204,8 +204,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void TwoValueObjectsWithSamePropertyValues_GetHashCode_ReturnsSameHashCode()
             {
                 // Arrange
-                var objectOne = new TestValueObject(5);
-                var objectTwo = new TestValueObject(5);
+                TestValueObject objectOne = new(5);
+                TestValueObject objectTwo = new(5);
 
                 // Act
                 int hashCodeOne = objectOne.GetHashCode();
@@ -219,8 +219,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void TwoValueObjectsWithDifferentPropertyValues_GetHashCode_ReturnsDifferentHashCodes()
             {
                 // Arrange
-                var objectOne = new TestValueObject(5);
-                var objectTwo = new TestValueObject(9);
+                TestValueObject objectOne = new(5);
+                TestValueObject objectTwo = new(9);
 
                 // Act
                 int hashCodeOne = objectOne.GetHashCode();
@@ -234,7 +234,7 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void NullEqualityComponents_GetHashCode_ReturnsZero()
             {
                 // Arrange
-                var valueObject = new AnotherTestValueObject(null, null);
+                AnotherTestValueObject valueObject = new(null, null);
 
                 // Act
                 int result = valueObject.GetHashCode();
@@ -250,7 +250,7 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void NoArguments_GetCopy_ReturnsCopyOfValueObjectWithDifferentReference()
             {
                 // Arrange
-                var valueObject = new TestValueObject(5);
+                TestValueObject valueObject = new(5);
 
                 // Act
                 ValueObject result = valueObject.GetCopy();

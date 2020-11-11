@@ -17,7 +17,7 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
                 var id = Guid.NewGuid();
 
                 // Act
-                var sut = new TestEntity(id);
+                TestEntity sut = new(id);
 
                 // Assert
                 Assert.IsAssignableFrom<Entity>(sut);
@@ -46,8 +46,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             {
                 // Arrange
                 var id = Guid.NewGuid();
-                var objectOne = new TestEntity(id);
-                var objectTwo = new TestEntity(id);
+                TestEntity objectOne = new(id);
+                TestEntity objectTwo = new(id);
 
                 // Act
                 bool result = objectOne == objectTwo;
@@ -60,8 +60,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void TwoEntitiesWithDifferentIds_EqualOperator_ReturnsFalse()
             {
                 // Arrange
-                var objectOne = new TestEntity(new Guid("dcb1a0ab-ea79-482a-9cf5-621561b514f2"));
-                var objectTwo = new TestEntity(new Guid("5feda89d-640c-449a-b836-c2c66482a6e2"));
+                TestEntity objectOne = new(new Guid("dcb1a0ab-ea79-482a-9cf5-621561b514f2"));
+                TestEntity objectTwo = new(new Guid("5feda89d-640c-449a-b836-c2c66482a6e2"));
 
                 // Act
                 bool result = objectOne == objectTwo;
@@ -75,7 +75,7 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             {
                 // Arrange
                 TestEntity objectOne = null;
-                var objectTwo = new TestEntity(Guid.NewGuid());
+                TestEntity objectTwo = new(Guid.NewGuid());
 
                 // Act
                 bool result = objectOne == objectTwo;
@@ -88,7 +88,7 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void NullRightOperand_EqualOperator_ReturnsFalse()
             {
                 // Arrange
-                var objectOne = new TestEntity(Guid.NewGuid());
+                TestEntity objectOne = new(Guid.NewGuid());
                 TestEntity objectTwo = null;
 
                 // Act
@@ -102,8 +102,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void ObjectOfDifferentType_EqualOperator_ReturnsFalse()
             {
                 // Arrange
-                var objectOne = new TestEntity(Guid.NewGuid());
-                var objectTwo = new AnotherTestEntity(Guid.NewGuid());
+                TestEntity objectOne = new(Guid.NewGuid());
+                AnotherTestEntity objectTwo = new(Guid.NewGuid());
 
                 // Act
                 bool result = objectOne == objectTwo;
@@ -134,8 +134,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             {
                 // Arrange
                 var id = Guid.NewGuid();
-                var objectOne = new TestEntity(id);
-                var objectTwo = new TestEntity(id);
+                TestEntity objectOne = new(id);
+                TestEntity objectTwo = new(id);
 
                 // Act
                 bool result = objectOne != objectTwo;
@@ -148,8 +148,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void TwoEntitiesWithDifferentIds_NotEqualOperator_ReturnsTrue()
             {
                 // Arrange
-                var objectOne = new TestEntity(new Guid("dcb1a0ab-ea79-482a-9cf5-621561b514f2"));
-                var objectTwo = new TestEntity(new Guid("5feda89d-640c-449a-b836-c2c66482a6e2"));
+                TestEntity objectOne = new(new Guid("dcb1a0ab-ea79-482a-9cf5-621561b514f2"));
+                TestEntity objectTwo = new(new Guid("5feda89d-640c-449a-b836-c2c66482a6e2"));
 
                 // Act
                 bool result = objectOne != objectTwo;
@@ -163,7 +163,7 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             {
                 // Arrange
                 TestEntity objectOne = null;
-                var objectTwo = new TestEntity(Guid.NewGuid());
+                TestEntity objectTwo = new(Guid.NewGuid());
 
                 // Act
                 bool result = objectOne != objectTwo;
@@ -176,7 +176,7 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void NullRightOperand_NotEqualOperator_ReturnsTrue()
             {
                 // Arrange
-                var objectOne = new TestEntity(Guid.NewGuid());
+                TestEntity objectOne = new(Guid.NewGuid());
                 TestEntity objectTwo = null;
 
                 // Act
@@ -190,8 +190,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void ObjectOfDifferentType_NotEqualOperator_ReturnsTrue()
             {
                 // Arrange
-                var objectOne = new TestEntity(Guid.NewGuid());
-                var objectTwo = new AnotherTestEntity(Guid.NewGuid());
+                TestEntity objectOne = new(Guid.NewGuid());
+                AnotherTestEntity objectTwo = new(Guid.NewGuid());
 
                 // Act
                 bool result = objectOne != objectTwo;
@@ -207,7 +207,7 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void NullObject_Equals_ReturnsFalse()
             {
                 // Arrange
-                var entity = new TestEntity(Guid.NewGuid());
+                TestEntity entity = new(Guid.NewGuid());
 
                 // Act
                 bool result = entity.Equals(null);
@@ -224,8 +224,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             {
                 // Arrange
                 var id = Guid.NewGuid();
-                var objectOne = new TestEntity(id);
-                var objectTwo = new TestEntity(id);
+                TestEntity objectOne = new(id);
+                TestEntity objectTwo = new(id);
 
                 // Act
                 int hashCodeOne = objectOne.GetHashCode();
@@ -239,8 +239,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void TwoEntitiesWithSameTypeAndDifferentIds_GetHashCode_ReturnsDifferentHashCodes()
             {
                 // Arrange
-                var objectOne = new TestEntity(Guid.NewGuid());
-                var objectTwo = new TestEntity(Guid.NewGuid());
+                TestEntity objectOne = new(Guid.NewGuid());
+                TestEntity objectTwo = new(Guid.NewGuid());
 
                 // Act
                 int hashCodeOne = objectOne.GetHashCode();
@@ -255,8 +255,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             {
                 // Arrange
                 var id = Guid.NewGuid();
-                var objectOne = new TestEntity(id);
-                var objectTwo = new AnotherTestEntity(id);
+                TestEntity objectOne = new(id);
+                AnotherTestEntity objectTwo = new(id);
 
                 // Act
                 int hashCodeOne = objectOne.GetHashCode();
@@ -270,8 +270,8 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void TwoEntitiesWithDifferentTypeAndDifferentId_GetHashCode_ReturnsDifferentHashCode()
             {
                 // Arrange
-                var objectOne = new TestEntity(Guid.NewGuid());
-                var objectTwo = new AnotherTestEntity(Guid.NewGuid());
+                TestEntity objectOne = new(Guid.NewGuid());
+                AnotherTestEntity objectTwo = new(Guid.NewGuid());
 
                 // Act
                 int hashCodeOne = objectOne.GetHashCode();
@@ -288,7 +288,7 @@ namespace ThomasWoodcock.Domain.UnitTests.SeedWork
             public void NoArguments_ToString_ReturnsExpectedString()
             {
                 // Arrange
-                var entity = new TestEntity(new Guid("dcb1a0ab-ea79-482a-9cf5-621561b514f2"));
+                TestEntity entity = new(new Guid("dcb1a0ab-ea79-482a-9cf5-621561b514f2"));
 
                 // Act
                 string result = entity.ToString();
