@@ -51,9 +51,9 @@ namespace ThomasWoodcock.Domain.SeedWork
         /// Otherwise, <see cref="ValueObject.GetEqualityComponents" /> is used to compare
         /// the properties of the two ValueObjects.
         /// </remarks>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            if (obj == null || !(obj is ValueObject other))
+            if (obj == null || obj is not ValueObject other)
             {
                 return false;
             }

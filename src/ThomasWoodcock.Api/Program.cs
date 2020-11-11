@@ -1,25 +1,16 @@
-using System.Threading.Tasks;
-
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace ThomasWoodcock.Api
-{
-    internal class Program
-    {
-        private async static Task Main()
-        {
-            await CreateHostBuilder()
-                .Build()
-                .RunAsync()
-                .ConfigureAwait(true);
-        }
+using ThomasWoodcock.Api;
 
-        private static IHostBuilder CreateHostBuilder() =>
-            Host.CreateDefaultBuilder()
-                .ConfigureWebHostDefaults(builder =>
-                {
-                    builder.UseStartup<Startup>();
-                });
-    }
-}
+await CreateHostBuilder()
+        .Build()
+        .RunAsync()
+        .ConfigureAwait(true);
+
+static IHostBuilder CreateHostBuilder() =>
+    Host.CreateDefaultBuilder()
+        .ConfigureWebHostDefaults(builder =>
+        {
+            builder.UseStartup<Startup>();
+        });

@@ -61,9 +61,9 @@ namespace ThomasWoodcock.Domain.SeedWork
         /// If the given Entity is null, not an Entity, or of a different type, it is
         /// deemed unequal. Otherwise, its ID is compared for equality.
         /// </remarks>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            if (obj == null || !(obj is Entity other))
+            if (obj == null || obj is not Entity other)
             {
                 return false;
             }
