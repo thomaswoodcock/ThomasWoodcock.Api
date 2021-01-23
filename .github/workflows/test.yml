@@ -20,5 +20,5 @@ jobs:
       - name: Build
         run: dotnet build src/ThomasWoodcock.Api/ThomasWoodcock.Api.csproj
 
-      - name: Test
-        run: dotnet test tests/ThomasWoodcock.Domain.UnitTests/ThomasWoodcock.Domain.UnitTests.csproj
+      #- name: Test
+      #  run: dotnet test tests/ThomasWoodcock.Domain.UnitTests/ThomasWoodcock.Domain.UnitTests.csproj
