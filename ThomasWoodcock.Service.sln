@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThomasWoodcock.Service", "src\ThomasWoodcock.Service\ThomasWoodcock.Service.csproj", "{90472FCD-181C-46CF-AD52-AD1A90934B28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThomasWoodcock.Service.WebApi", "src\ThomasWoodcock.Service.WebApi\ThomasWoodcock.Service.WebApi.csproj", "{5AA4282A-064C-484A-AECF-B57E89D77E87}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90472FCD-181C-46CF-AD52-AD1A90934B28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90472FCD-181C-46CF-AD52-AD1A90934B28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90472FCD-181C-46CF-AD52-AD1A90934B28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90472FCD-181C-46CF-AD52-AD1A90934B28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AA4282A-064C-484A-AECF-B57E89D77E87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AA4282A-064C-484A-AECF-B57E89D77E87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AA4282A-064C-484A-AECF-B57E89D77E87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AA4282A-064C-484A-AECF-B57E89D77E87}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
