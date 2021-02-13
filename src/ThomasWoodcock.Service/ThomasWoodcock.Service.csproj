@@ -5,4 +5,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ThomasWoodcock.Service.WebApi\ThomasWoodcock.Service.WebApi.csproj" />
+    </ItemGroup>
+
 </Project>
