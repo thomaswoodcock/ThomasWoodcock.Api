@@ -1,4 +1,4 @@
-namespace ThomasWoodcock.Service.Application
+namespace ThomasWoodcock.Service.Application.Common
 {
     /// <summary>
     ///     Allows a class to act as a password hasher.
