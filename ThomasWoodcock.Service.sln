@@ -4,6 +4,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThomasWoodcock.Service", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThomasWoodcock.Service.WebApi", "src\ThomasWoodcock.Service.WebApi\ThomasWoodcock.Service.WebApi.csproj", "{5AA4282A-064C-484A-AECF-B57E89D77E87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThomasWoodcock.Service.Application.UnitTests", "tests\ThomasWoodcock.Service.Application.UnitTests\ThomasWoodcock.Service.Application.UnitTests.csproj", "{A6215065-F1E4-49F2-88E7-45E79504A6B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThomasWoodcock.Service.Application", "src\ThomasWoodcock.Service.Application\ThomasWoodcock.Service.Application.csproj", "{20CF0145-3414-4D5A-B235-BDB3D2F251B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThomasWoodcock.Service.Domain", "src\ThomasWoodcock.Service.Domain\ThomasWoodcock.Service.Domain.csproj", "{3E7AB223-244E-4593-89C6-034723FBDDA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThomasWoodcock.Service.Domain.UnitTests", "tests\ThomasWoodcock.Service.Domain.UnitTests\ThomasWoodcock.Service.Domain.UnitTests.csproj", "{03563D84-8EE7-46E0-A909-114DFB165167}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +26,21 @@ Global
 		{5AA4282A-064C-484A-AECF-B57E89D77E87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AA4282A-064C-484A-AECF-B57E89D77E87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AA4282A-064C-484A-AECF-B57E89D77E87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6215065-F1E4-49F2-88E7-45E79504A6B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6215065-F1E4-49F2-88E7-45E79504A6B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6215065-F1E4-49F2-88E7-45E79504A6B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6215065-F1E4-49F2-88E7-45E79504A6B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20CF0145-3414-4D5A-B235-BDB3D2F251B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20CF0145-3414-4D5A-B235-BDB3D2F251B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20CF0145-3414-4D5A-B235-BDB3D2F251B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20CF0145-3414-4D5A-B235-BDB3D2F251B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E7AB223-244E-4593-89C6-034723FBDDA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E7AB223-244E-4593-89C6-034723FBDDA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E7AB223-244E-4593-89C6-034723FBDDA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E7AB223-244E-4593-89C6-034723FBDDA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03563D84-8EE7-46E0-A909-114DFB165167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03563D84-8EE7-46E0-A909-114DFB165167}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03563D84-8EE7-46E0-A909-114DFB165167}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03563D84-8EE7-46E0-A909-114DFB165167}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

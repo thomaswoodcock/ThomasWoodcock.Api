@@ -9,9 +9,6 @@ namespace ThomasWoodcock.Service.WebApi.Controllers
     public class AccountController : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            return await Task.FromResult(this.Ok("Hello, World!"));
-        }
+        public async Task<IActionResult> Get() => await Task.FromResult(this.Ok("Hello, World!"));
     }
 }
