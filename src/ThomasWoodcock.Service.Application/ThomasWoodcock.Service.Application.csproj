@@ -1,9 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
-        <OutputType>Library</OutputType>
     </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ThomasWoodcock.Service.Domain\ThomasWoodcock.Service.Domain.csproj"/>
+    </ItemGroup>
 
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
