@@ -30,6 +30,14 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands
         void Add(AccountActivationKey activationKey);
 
         /// <summary>
+        ///     Removes an activation key from the repository.
+        /// </summary>
+        /// <param name="activationKey">
+        ///     The activation key to remove from the repository.
+        /// </param>
+        void Remove(AccountActivationKey activationKey);
+
+        /// <summary>
         ///     Saves any changes made to the repository.
         /// </summary>
         Task SaveAsync();

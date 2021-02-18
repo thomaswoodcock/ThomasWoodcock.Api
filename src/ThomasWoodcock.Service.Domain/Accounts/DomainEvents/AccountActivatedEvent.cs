@@ -17,7 +17,7 @@ namespace ThomasWoodcock.Service.Domain.Accounts.DomainEvents
         /// <param name="account">
         ///     The account that was activated.
         /// </param>
-        internal AccountActivatedEvent(Account account)
+        public AccountActivatedEvent(Account account)
         {
             this.Account = account ?? throw new ArgumentNullException(nameof(account));
         }
