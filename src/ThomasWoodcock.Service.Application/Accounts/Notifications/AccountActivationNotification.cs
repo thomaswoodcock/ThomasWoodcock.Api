@@ -1,5 +1,6 @@
 using System;
 
+using ThomasWoodcock.Service.Application.Accounts.Entities;
 using ThomasWoodcock.Service.Application.Common.Notifications;
 using ThomasWoodcock.Service.Domain.Accounts;
 
@@ -22,18 +23,12 @@ namespace ThomasWoodcock.Service.Application.Accounts.Notifications
         ///     The key that can be used to activate the account.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        ///     Thrown if the given <paramref name="account" /> is null or <paramref name="activationKey" /> is empty.
+        ///     Thrown if the given <paramref name="account" /> or <paramref name="activationKey" /> are null.
         /// </exception>
-        public AccountActivationNotification(Account account, Guid activationKey)
+        public AccountActivationNotification(Account account, AccountActivationKey activationKey)
         {
             this.Account = account ?? throw new ArgumentNullException(nameof(account));
-
-            if (activationKey == Guid.Empty)
-            {
-                throw new ArgumentNullException(nameof(activationKey));
-            }
-
-            this.ActivationKey = activationKey;
+            this.ActivationKey = activationKey ?? throw new ArgumentNullException(nameof(activationKey));
         }
 
         /// <summary>
@@ -44,6 +39,6 @@ namespace ThomasWoodcock.Service.Application.Accounts.Notifications
         /// <summary>
         ///     Gets the key that can be used to activate the account.
         /// </summary>
-        public Guid ActivationKey { get; }
+        public AccountActivationKey ActivationKey { get; }
     }
 }
