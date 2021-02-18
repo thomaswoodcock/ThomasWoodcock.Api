@@ -1,11 +1,14 @@
 using System;
 
+using ThomasWoodcock.Service.Application.Common.Commands;
+
 namespace ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount
 {
+    /// <inheritdoc />
     /// <summary>
     ///     Represents a command to create an account.
     /// </summary>
-    public sealed class CreateAccountCommand
+    public sealed class CreateAccountCommand : ICommand
     {
         /// <summary>
         ///     Gets or sets the ID to associate with the account.

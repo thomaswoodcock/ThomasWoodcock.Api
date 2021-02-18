@@ -12,6 +12,7 @@ using ThomasWoodcock.Service.Application.Accounts.Commands.ActivateAccount;
 using ThomasWoodcock.Service.Application.Accounts.Entities;
 using ThomasWoodcock.Service.Application.Accounts.FailureReasons;
 using ThomasWoodcock.Service.Application.Common;
+using ThomasWoodcock.Service.Application.Common.Commands;
 using ThomasWoodcock.Service.Domain.Accounts;
 using ThomasWoodcock.Service.Domain.Accounts.DomainEvents;
 using ThomasWoodcock.Service.Domain.Accounts.FailureReasons;
@@ -233,8 +234,8 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
             internal readonly IAccountActivationKeyRepository KeyRepository =
                 Substitute.For<IAccountActivationKeyRepository>();
 
-            internal readonly IActivateAccountCommandValidator Validator =
-                Substitute.For<IActivateAccountCommandValidator>();
+            internal readonly ICommandValidator<ActivateAccountCommand> Validator =
+                Substitute.For<ICommandValidator<ActivateAccountCommand>>();
 
             public Fixture()
             {

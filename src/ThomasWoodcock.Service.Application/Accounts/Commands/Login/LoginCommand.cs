@@ -6,7 +6,7 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.Login
     /// <summary>
     ///     Represents a command to login to an account.
     /// </summary>
-    internal sealed class LoginCommand : ICommand
+    public sealed class LoginCommand : ICommand
     {
         /// <summary>
         ///     Gets or sets the email address of the account that will be logged in.

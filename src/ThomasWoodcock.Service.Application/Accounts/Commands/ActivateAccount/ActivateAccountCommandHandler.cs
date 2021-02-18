@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ThomasWoodcock.Service.Application.Accounts.Entities;
 using ThomasWoodcock.Service.Application.Accounts.FailureReasons;
 using ThomasWoodcock.Service.Application.Common;
+using ThomasWoodcock.Service.Application.Common.Commands;
 using ThomasWoodcock.Service.Domain.Accounts;
 using ThomasWoodcock.Service.Domain.Accounts.FailureReasons;
 using ThomasWoodcock.Service.Domain.SharedKernel.Results;
@@ -13,18 +14,18 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.ActivateAccount
     /// <summary>
     ///     A handler for <see cref="ActivateAccountCommand" /> objects.
     /// </summary>
-    internal sealed class ActivateAccountCommandHandler
+    internal sealed class ActivateAccountCommandHandler : ICommandHandler<ActivateAccountCommand>
     {
         private readonly IAccountCommandRepository _accountRepository;
         private readonly IDomainEventDispatcher _dispatcher;
         private readonly IAccountActivationKeyRepository _keyRepository;
-        private readonly IActivateAccountCommandValidator _validator;
+        private readonly ICommandValidator<ActivateAccountCommand> _validator;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ActivateAccountCommandHandler" /> class.
         /// </summary>
         /// <param name="validator">
-        ///     The <see cref="IActivateAccountCommandValidator" /> used to validate the command.
+        ///     The <see cref="ICommandValidator{T}" /> used to validate the command.
         /// </param>
         /// <param name="accountRepository">
         ///     The <see cref="IAccountCommandRepository" /> used to retrieve and update accounts.
@@ -35,7 +36,7 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.ActivateAccount
         /// <param name="dispatcher">
         ///     The <see cref="IDomainEventDispatcher" /> used to dispatch domain events.
         /// </param>
-        public ActivateAccountCommandHandler(IActivateAccountCommandValidator validator,
+        public ActivateAccountCommandHandler(ICommandValidator<ActivateAccountCommand> validator,
             IAccountCommandRepository accountRepository, IAccountActivationKeyRepository keyRepository,
             IDomainEventDispatcher dispatcher)
         {
@@ -45,16 +46,8 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.ActivateAccount
             this._dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        /// <summary>
-        ///     Handles the given <paramref name="command" />.
-        /// </summary>
-        /// <param name="command">
-        ///     The command to handle.
-        /// </param>
-        /// <returns>
-        ///     An <see cref="IResult" /> that determines whether the account was activated.
-        /// </returns>
-        internal async Task<IResult> HandleAsync(ActivateAccountCommand command)
+        /// <inheritdoc />
+        public async Task<IResult> HandleAsync(ActivateAccountCommand command)
         {
             IResult validationResult = this._validator.Validate(command);
 
