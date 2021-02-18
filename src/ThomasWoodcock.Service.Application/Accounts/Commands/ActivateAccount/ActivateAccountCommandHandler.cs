@@ -11,6 +11,7 @@ using ThomasWoodcock.Service.Domain.SharedKernel.Results;
 
 namespace ThomasWoodcock.Service.Application.Accounts.Commands.ActivateAccount
 {
+    /// <inheritdoc />
     /// <summary>
     ///     A handler for <see cref="ActivateAccountCommand" /> objects.
     /// </summary>
