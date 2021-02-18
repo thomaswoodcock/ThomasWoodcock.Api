@@ -1,8 +1,9 @@
 using System;
 using System.Threading.Tasks;
 
+using ThomasWoodcock.Service.Application.Accounts.Commands;
+using ThomasWoodcock.Service.Application.Accounts.Entities;
 using ThomasWoodcock.Service.Application.Accounts.Notifications;
-using ThomasWoodcock.Service.Application.Accounts.Services;
 using ThomasWoodcock.Service.Application.Common.Notifications;
 using ThomasWoodcock.Service.Domain.Accounts.DomainEvents;
 
@@ -13,21 +14,21 @@ namespace ThomasWoodcock.Service.Application.Accounts.EventHandlers
     /// </summary>
     internal sealed class AccountCreatedEventHandler
     {
-        private readonly IAccountActivationKeyGenerator _keyGenerator;
+        private readonly IAccountActivationKeyRepository _repository;
         private readonly INotificationSender _sender;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="AccountCreatedEventHandler" /> class.
         /// </summary>
-        /// <param name="keyGenerator">
-        ///     The <see cref="IAccountActivationKeyGenerator" /> used to generate an account activation key.
+        /// <param name="repository">
+        ///     The <see cref="IAccountActivationKeyRepository" /> used to add activation keys.
         /// </param>
         /// <param name="sender">
         ///     The <see cref="INotificationSender" /> used to send a notification to the user.
         /// </param>
-        public AccountCreatedEventHandler(IAccountActivationKeyGenerator keyGenerator, INotificationSender sender)
+        public AccountCreatedEventHandler(IAccountActivationKeyRepository repository, INotificationSender sender)
         {
-            this._keyGenerator = keyGenerator ?? throw new ArgumentNullException(nameof(keyGenerator));
+            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
             this._sender = sender ?? throw new ArgumentNullException(nameof(sender));
         }
 
@@ -47,7 +48,11 @@ namespace ThomasWoodcock.Service.Application.Accounts.EventHandlers
                 throw new ArgumentNullException(nameof(createdEvent));
             }
 
-            Guid activationKey = await this._keyGenerator.GenerateAsync(createdEvent.Account);
+            AccountActivationKey activationKey = new(Guid.NewGuid());
+
+            this._repository.Add(activationKey);
+            await this._repository.SaveAsync();
+
             await this._sender.SendAsync(new AccountActivationNotification(createdEvent.Account, activationKey));
         }
     }

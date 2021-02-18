@@ -8,7 +8,7 @@ using Xunit;
 
 namespace ThomasWoodcock.Service.Domain.UnitTests.Accounts.DomainEvents
 {
-    public sealed class AccountCreatedEventTests
+    public sealed class AccountActivatedEventTests
     {
         public sealed class Constructor
         {
@@ -16,7 +16,7 @@ namespace ThomasWoodcock.Service.Domain.UnitTests.Accounts.DomainEvents
             public void NullAccount_Constructor_ThrowsArgumentNullException()
             {
                 // Arrange Act Assert
-                Assert.Throws<ArgumentNullException>(() => new AccountCreatedEvent(null));
+                Assert.Throws<ArgumentNullException>(() => new AccountActivatedEvent(null));
             }
 
             [Fact]
@@ -27,7 +27,7 @@ namespace ThomasWoodcock.Service.Domain.UnitTests.Accounts.DomainEvents
                     "test@test.com", "TestPassword123");
 
                 // Act
-                AccountCreatedEvent sut = new(account.Value);
+                AccountActivatedEvent sut = new(account.Value);
 
                 // Assert
                 Assert.Equal(account.Value, sut.Account);

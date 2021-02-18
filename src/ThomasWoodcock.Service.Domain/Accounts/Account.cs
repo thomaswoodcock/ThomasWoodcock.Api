@@ -36,6 +36,7 @@ namespace ThomasWoodcock.Service.Domain.Accounts
             this.Name = name;
             this.EmailAddress = emailAddress;
             this.Password = password;
+            this.IsActive = false;
 
             this.RaiseDomainEvent(new AccountCreatedEvent(this));
         }
@@ -54,6 +55,30 @@ namespace ThomasWoodcock.Service.Domain.Accounts
         ///     Gets the password for the account.
         /// </summary>
         public string Password { get; }
+
+        /// <summary>
+        ///     Gets the value that determines whether the account is active.
+        /// </summary>
+        public bool IsActive { get; private set; }
+
+        /// <summary>
+        ///     Activates the account.
+        /// </summary>
+        /// <returns>
+        ///     An <see cref="IResult" /> indicating whether the account was successfully activated.
+        /// </returns>
+        public IResult Activate()
+        {
+            if (this.IsActive)
+            {
+                return Result.Failure(new AccountAlreadyActiveFailure());
+            }
+
+            this.IsActive = true;
+            this.RaiseDomainEvent(new AccountActivatedEvent(this));
+
+            return Result.Success();
+        }
 
         /// <summary>
         ///     Creates an account.

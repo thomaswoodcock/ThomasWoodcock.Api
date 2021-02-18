@@ -1,6 +1,7 @@
 using System;
 
 using ThomasWoodcock.Service.Domain.Accounts;
+using ThomasWoodcock.Service.Domain.Accounts.DomainEvents;
 using ThomasWoodcock.Service.Domain.Accounts.FailureReasons;
 using ThomasWoodcock.Service.Domain.SharedKernel.Results;
 
@@ -98,6 +99,98 @@ namespace ThomasWoodcock.Service.Domain.UnitTests.Accounts
                 Assert.Equal("Test Name", result.Value.Name);
                 Assert.Equal("test@test.com", result.Value.EmailAddress.ToString());
                 Assert.Equal("TestPassword123", result.Value.Password);
+                Assert.False(result.Value.IsActive);
+            }
+
+            [Fact]
+            public void ValidArguments_Create_RaisesDomainEvent()
+            {
+                // Arrange Act
+                IResult<Account> result = Account.Create(this._fixture.AccountId, "Test Name", "test@test.com",
+                    "TestPassword123");
+
+                // Assert
+                Assert.Contains(result.Value.DomainEvents,
+                    domainEvent => domainEvent is AccountCreatedEvent createdEvent &&
+                                   createdEvent.Account == result.Value);
+            }
+        }
+
+        public sealed class Activate : IClassFixture<Fixture>
+        {
+            private readonly Fixture _fixture;
+
+            public Activate(Fixture fixture)
+            {
+                this._fixture = fixture;
+            }
+
+            [Fact]
+            public void ActiveAccount_Activate_ReturnsFailedResult()
+            {
+                // Arrange
+                Account account = Account.Create(this._fixture.AccountId, "Test Name", "test@test.com",
+                        "TestPassword123")
+                    .Value;
+
+                IResult _ = account.Activate();
+
+                // Act
+                IResult result = account.Activate();
+
+                // Assert
+                Assert.True(result.IsFailed);
+                Assert.False(result.IsSuccessful);
+                Assert.IsType<AccountAlreadyActiveFailure>(result.FailureReason);
+            }
+
+            [Fact]
+            public void InactiveAccount_Activate_ReturnsSuccessfulResult()
+            {
+                // Arrange
+                Account account = Account.Create(this._fixture.AccountId, "Test Name", "test@test.com",
+                        "TestPassword123")
+                    .Value;
+
+                // Act
+                IResult result = account.Activate();
+
+                // Assert
+                Assert.True(result.IsSuccessful);
+                Assert.False(result.IsFailed);
+                Assert.Null(result.FailureReason);
+            }
+
+            [Fact]
+            public void InactiveAccount_Activate_ActivatesAccount()
+            {
+                // Arrange
+                Account account = Account.Create(this._fixture.AccountId, "Test Name", "test@test.com",
+                        "TestPassword123")
+                    .Value;
+
+                // Act
+                IResult _ = account.Activate();
+
+                // Assert
+                Assert.True(account.IsActive);
+            }
+
+            [Fact]
+            public void InactiveAccount_Activate_RaisesDomainEvent()
+            {
+                // Arrange
+                Account account = Account.Create(this._fixture.AccountId, "Test Name", "test@test.com",
+                        "TestPassword123")
+                    .Value;
+
+                // Act
+                IResult _ = account.Activate();
+
+                // Assert
+                Assert.Contains(account.DomainEvents,
+                    domainEvent => domainEvent is AccountActivatedEvent activatedEvent &&
+                                   activatedEvent.Account == account);
             }
         }
 

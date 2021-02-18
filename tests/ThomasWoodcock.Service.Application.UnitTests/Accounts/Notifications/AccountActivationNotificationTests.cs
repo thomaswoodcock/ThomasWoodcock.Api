@@ -1,5 +1,6 @@
 using System;
 
+using ThomasWoodcock.Service.Application.Accounts.Entities;
 using ThomasWoodcock.Service.Application.Accounts.Notifications;
 using ThomasWoodcock.Service.Domain.Accounts;
 
@@ -27,11 +28,11 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Notifications
             }
 
             [Fact]
-            public void EmptyActivationKey_Constructor_ThrowsArgumentNullException()
+            public void NullActivationKey_Constructor_ThrowsArgumentNullException()
             {
                 // Arrange Act Assert
                 Assert.Throws<ArgumentNullException>(() =>
-                    new AccountActivationNotification(this._fixture.Account, Guid.Empty));
+                    new AccountActivationNotification(this._fixture.Account, null));
             }
 
             [Fact]
@@ -48,7 +49,8 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Notifications
 
         public sealed class Fixture
         {
-            internal readonly Guid ActivationKey = new("A03008CF-AAF4-43A6-84D6-DA5EBC7E5072");
+            internal readonly AccountActivationKey
+                ActivationKey = new(new Guid("DF2578E4-12C7-493C-A6E4-B2F7D3241763"));
 
             public Fixture()
             {
