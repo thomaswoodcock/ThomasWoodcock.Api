@@ -2,27 +2,29 @@ using System;
 using System.Threading.Tasks;
 
 using ThomasWoodcock.Service.Application.Common;
+using ThomasWoodcock.Service.Application.Common.Commands;
 using ThomasWoodcock.Service.Domain.Accounts;
 using ThomasWoodcock.Service.Domain.Accounts.FailureReasons;
 using ThomasWoodcock.Service.Domain.SharedKernel.Results;
 
 namespace ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount
 {
+    /// <inheritdoc />
     /// <summary>
     ///     A handler for <see cref="CreateAccountCommand" /> objects.
     /// </summary>
-    internal sealed class CreateAccountCommandHandler
+    internal sealed class CreateAccountCommandHandler : ICommandHandler<CreateAccountCommand>
     {
         private readonly IDomainEventDispatcher _dispatcher;
         private readonly IPasswordHasher _hasher;
         private readonly IAccountCommandRepository _repository;
-        private readonly ICreateAccountCommandValidator _validator;
+        private readonly ICommandValidator<CreateAccountCommand> _validator;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="CreateAccountCommandHandler" /> class.
         /// </summary>
         /// <param name="validator">
-        ///     The <see cref="ICreateAccountCommandValidator" /> used to validate the command.
+        ///     The <see cref="ICommandValidator{T}" /> used to validate the command.
         /// </param>
         /// <param name="repository">
         ///     The <see cref="IAccountCommandRepository" /> used to retrieve and add accounts.
@@ -33,7 +35,7 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount
         /// <param name="dispatcher">
         ///     The <see cref="IDomainEventDispatcher" /> used to dispatch domain events.
         /// </param>
-        public CreateAccountCommandHandler(ICreateAccountCommandValidator validator,
+        public CreateAccountCommandHandler(ICommandValidator<CreateAccountCommand> validator,
             IAccountCommandRepository repository, IPasswordHasher hasher, IDomainEventDispatcher dispatcher)
         {
             this._validator = validator ?? throw new ArgumentNullException(nameof(validator));
@@ -42,15 +44,7 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount
             this._dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        /// <summary>
-        ///     Handles the given <paramref name="command" />.
-        /// </summary>
-        /// <param name="command">
-        ///     The command to handle.
-        /// </param>
-        /// <returns>
-        ///     An <see cref="IResult" /> that determines whether the account was created.
-        /// </returns>
+        /// <inheritdoc />
         public async Task<IResult> HandleAsync(CreateAccountCommand command)
         {
             IResult validationResult = this._validator.Validate(command);

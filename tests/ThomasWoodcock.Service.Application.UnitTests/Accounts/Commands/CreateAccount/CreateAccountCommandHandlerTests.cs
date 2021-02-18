@@ -9,6 +9,7 @@ using NSubstitute.ClearExtensions;
 using ThomasWoodcock.Service.Application.Accounts.Commands;
 using ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount;
 using ThomasWoodcock.Service.Application.Common;
+using ThomasWoodcock.Service.Application.Common.Commands;
 using ThomasWoodcock.Service.Domain.Accounts;
 using ThomasWoodcock.Service.Domain.Accounts.DomainEvents;
 using ThomasWoodcock.Service.Domain.Accounts.FailureReasons;
@@ -182,8 +183,8 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
 
             internal readonly IAccountCommandRepository Repository = Substitute.For<IAccountCommandRepository>();
 
-            internal readonly ICreateAccountCommandValidator Validator =
-                Substitute.For<ICreateAccountCommandValidator>();
+            internal readonly ICommandValidator<CreateAccountCommand> Validator =
+                Substitute.For<ICommandValidator<CreateAccountCommand>>();
 
             public Fixture()
             {
