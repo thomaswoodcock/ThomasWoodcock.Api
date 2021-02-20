@@ -23,8 +23,8 @@ jobs:
 
       - name: Replace Tokens
         run: |
-          find . -type f -name 'appsettings*.json' -exec sed -i ''s/#{DatabaseConnection}#/${{ secrets.DATABASECONNECTION }}/g'' {} \;
-          find . -type f -name 'appsettings*.json' -exec sed -i ''s/#{DatabaseName}#/${{ secrets.DATABASENAME }}/g'' {} \;
+          find . -type f -name 'appsettings*.json' -exec sed -i ''s~#{DatabaseConnection}#~${{ secrets.DATABASECONNECTION }}~g'' {} \;
+          find . -type f -name 'appsettings*.json' -exec sed -i ''s~#{DatabaseName}#~${{ secrets.DATABASENAME }}~g'' {} \;
 
       - name: Build and Publish
         run: |
