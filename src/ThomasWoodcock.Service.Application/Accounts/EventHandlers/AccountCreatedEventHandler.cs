@@ -50,7 +50,7 @@ namespace ThomasWoodcock.Service.Application.Accounts.EventHandlers
 
             AccountActivationKey activationKey = new(Guid.NewGuid());
 
-            this._repository.Add(activationKey);
+            this._repository.Add(createdEvent.Account, activationKey);
             await this._repository.SaveAsync();
 
             await this._sender.SendAsync(new AccountActivationNotification(createdEvent.Account, activationKey));

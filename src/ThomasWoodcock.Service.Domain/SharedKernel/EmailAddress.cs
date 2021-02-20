@@ -15,6 +15,13 @@ namespace ThomasWoodcock.Service.Domain.SharedKernel
         private readonly string _value;
 
         /// <summary>
+        ///     Allows an ORM to initialize the <see cref="EmailAddress" /> class.
+        /// </summary>
+        private EmailAddress()
+        {
+        }
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="EmailAddress" /> class.
         /// </summary>
         /// <param name="emailAddress">

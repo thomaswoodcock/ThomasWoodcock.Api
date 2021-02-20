@@ -68,7 +68,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.EventHandlers
 
                 // Assert
                 this._fixture.Repository.Received(1)
-                    .Add(Arg.Is<AccountActivationKey>(key => key.Value != Guid.Empty));
+                    .Add(this._fixture.Account, Arg.Is<AccountActivationKey>(key => key.Value != Guid.Empty));
 
                 await this._fixture.Repository.Received(1)
                     .SaveAsync();

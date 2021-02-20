@@ -5,7 +5,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ThomasWoodcock.Service.Infrastructure\ThomasWoodcock.Service.Infrastructure.csproj" />
       <ProjectReference Include="..\ThomasWoodcock.Service.WebApi\ThomasWoodcock.Service.WebApi.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.3">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
     </ItemGroup>
 
 </Project>
