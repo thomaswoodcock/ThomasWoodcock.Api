@@ -133,6 +133,91 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
             }
 
             [Fact]
+            public async Task EmptyAccountId_HandleAsync_ReturnsFailedResult()
+            {
+                // Arrange Act
+                IResult result = await this._fixture.Sut.HandleAsync(new CreateAccountCommand
+                {
+                    Id = Guid.Empty,
+                    Name = "Test Name",
+                    EmailAddress = "test@test.com",
+                    Password = "TestPassword123"
+                });
+
+                // Assert
+                Assert.True(result.IsFailed);
+                Assert.False(result.IsSuccessful);
+                Assert.IsType<InvalidAccountIdFailure>(result.FailureReason);
+            }
+
+            [Theory]
+            [InlineData(null)]
+            [InlineData("")]
+            [InlineData(" ")]
+            public async Task NullEmptyOrWhiteSpaceAccountName_HandleAsync_ReturnsFailedResult(string accountName)
+            {
+                // Arrange Act
+                IResult result = await this._fixture.Sut.HandleAsync(new CreateAccountCommand
+                {
+                    Id = this._fixture.AccountId,
+                    Name = accountName,
+                    EmailAddress = "test@test.com",
+                    Password = "TestPassword123"
+                });
+
+                // Assert
+                Assert.True(result.IsFailed);
+                Assert.False(result.IsSuccessful);
+                Assert.IsType<InvalidAccountNameFailure>(result.FailureReason);
+            }
+
+            [Theory]
+            [InlineData(null)]
+            [InlineData("")]
+            [InlineData(" ")]
+            [InlineData("test@test.")]
+            [InlineData("www.test.com")]
+            [InlineData("test^test.com")]
+            public async Task InvalidEmailAddress_HandleAsync_ReturnsFailedResult(string emailAddress)
+            {
+                // Arrange Act
+                IResult result = await this._fixture.Sut.HandleAsync(new CreateAccountCommand
+                {
+                    Id = this._fixture.AccountId,
+                    Name = "Test Name",
+                    EmailAddress = emailAddress,
+                    Password = "TestPassword123"
+                });
+
+                // Assert
+                Assert.True(result.IsFailed);
+                Assert.False(result.IsSuccessful);
+                Assert.IsType<InvalidAccountEmailFailure>(result.FailureReason);
+            }
+
+            [Theory]
+            [InlineData(null)]
+            [InlineData("")]
+            [InlineData(" ")]
+            public async Task NullEmptyOrWhiteSpaceAccountPassword_HandleAsync_ReturnsFailedResult(
+                string accountPassword)
+            {
+                // Arrange Act
+                IResult result = await this._fixture.Sut.HandleAsync(new CreateAccountCommand
+                {
+                    Id = this._fixture.AccountId,
+                    Name = "Test Name",
+                    EmailAddress = "test@test.com",
+                    Password = accountPassword
+                });
+
+                // Assert
+                Assert.True(result.IsFailed);
+                Assert.False(result.IsSuccessful);
+                Assert.IsType<InvalidAccountPasswordFailure>(result.FailureReason);
+            }
+
+            [Fact]
             public async Task ValidCommand_HandleAsync_ReturnsSuccessfulResult()
             {
                 // Arrange Act

@@ -7,7 +7,7 @@ namespace ThomasWoodcock.Service.Domain.Accounts.FailureReasons
     ///     An extension of the <see cref="InvalidFormatFailure" /> class that represents a failure that occurs when attempting
     ///     to create an account with an invalid name.
     /// </summary>
-    internal sealed class InvalidAccountNameFailure : InvalidFormatFailure
+    public sealed class InvalidAccountNameFailure : InvalidFormatFailure
     {
     }
 }
