@@ -21,10 +21,11 @@ jobs:
         with:
           dotnet-version: '5.0.x'
 
-      - name: Replace Tokens
-        run: |
-          find *.json -type f -exec sed -i ''s/#{DatabaseConnection}#/${{ secrets.DATABASECONNECTION }}/g'' {} \;
-          find *.json -type f -exec sed -i ''s/#{DatabaseName}#/${{ secrets.DATABASENAME }}/g'' {} \;
+      - name: Replace Database Connection Token
+        run: find *.json -type f -exec sed -i ''s/#{DatabaseConnection}#/${{ secrets.DATABASECONNECTION }}/g'' {} \;
+
+      - name: Replace Database Name Token
+        run: find *.json -type f -exec sed -i ''s/#{DatabaseName}#/${{ secrets.DATABASENAME }}/g'' {} \;
 
       - name: Build and Publish
         run: |
