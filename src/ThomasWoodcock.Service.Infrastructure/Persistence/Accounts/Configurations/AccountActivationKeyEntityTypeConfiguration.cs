@@ -1,5 +1,3 @@
-using System;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -24,13 +22,10 @@ namespace ThomasWoodcock.Service.Infrastructure.Persistence.Accounts.Configurati
 
             builder.HasKey(key => key.Value);
 
-            builder.Property<Guid>("AccountId")
-                .IsRequired()
-                .ValueGeneratedNever();
-
             builder.HasOne<Account>()
                 .WithOne()
-                .HasForeignKey<AccountActivationKey>("AccountId");
+                .HasForeignKey<AccountActivationKey>("AccountId")
+                .IsRequired();
         }
     }
 }
