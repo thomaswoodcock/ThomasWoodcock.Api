@@ -15,6 +15,11 @@ namespace ThomasWoodcock.Service.Domain.Accounts
     public sealed class Account : Entity
     {
         /// <inheritdoc />
+        private Account()
+        {
+        }
+
+        /// <inheritdoc />
         /// <summary>
         ///     Initializes a new instance of the <see cref="Account" /> class.
         /// </summary>

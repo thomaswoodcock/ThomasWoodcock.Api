@@ -24,10 +24,13 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands
         /// <summary>
         ///     Adds an activation key to the repository.
         /// </summary>
+        /// <param name="account">
+        ///     The account to which the activation key corresponds.
+        /// </param>
         /// <param name="activationKey">
         ///     The activation key to add to the repository.
         /// </param>
-        void Add(AccountActivationKey activationKey);
+        void Add(Account account, AccountActivationKey activationKey);
 
         /// <summary>
         ///     Removes an activation key from the repository.

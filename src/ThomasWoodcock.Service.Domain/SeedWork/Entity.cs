@@ -11,6 +11,13 @@ namespace ThomasWoodcock.Service.Domain.SeedWork
         private readonly List<IDomainEvent> _domainEvents = new();
 
         /// <summary>
+        ///     Allows an ORM to initialize the entity.
+        /// </summary>
+        private protected Entity()
+        {
+        }
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="Entity" /> class.
         /// </summary>
         /// <param name="id">

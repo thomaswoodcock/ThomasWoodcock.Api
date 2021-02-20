@@ -434,3 +434,8 @@ $RECYCLE.BIN/
 
 # Coverage Reports
 coveragereport/
+
+# Sqlite
+*.db
+*.db-shm
+*.db-wal

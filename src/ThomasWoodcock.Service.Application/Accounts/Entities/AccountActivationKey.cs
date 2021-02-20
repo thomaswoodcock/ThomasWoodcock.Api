@@ -8,12 +8,19 @@ namespace ThomasWoodcock.Service.Application.Accounts.Entities
     public sealed class AccountActivationKey
     {
         /// <summary>
+        ///     Allows an ORM to initialize the <see cref="AccountActivationKey" /> class.
+        /// </summary>
+        private AccountActivationKey()
+        {
+        }
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="AccountActivationKey" /> class.
         /// </summary>
         /// <param name="value">
         ///     The value with which to create the activation key.
         /// </param>
-        internal AccountActivationKey(Guid value)
+        public AccountActivationKey(Guid value)
         {
             if (value == Guid.Empty)
             {
@@ -26,6 +33,6 @@ namespace ThomasWoodcock.Service.Application.Accounts.Entities
         /// <summary>
         ///     Gets the value of the activation key.
         /// </summary>
-        internal Guid Value { get; }
+        public Guid Value { get; }
     }
 }
