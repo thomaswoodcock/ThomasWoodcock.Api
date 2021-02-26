@@ -10,7 +10,7 @@ namespace ThomasWoodcock.Service.Infrastructure.Persistence.Accounts.Configurati
     ///     An implementation of the <see cref="IEntityTypeConfiguration{TEntity}" /> interface used to configure Entity
     ///     Framework <see cref="Account" /> entities.
     /// </summary>
-    public sealed class AccountEntityTypeConfiguration : IEntityTypeConfiguration<Account>
+    internal sealed class AccountEntityTypeConfiguration : IEntityTypeConfiguration<Account>
     {
         /// <inheritdoc />
         public void Configure(EntityTypeBuilder<Account> builder)

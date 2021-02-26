@@ -10,8 +10,8 @@ namespace ThomasWoodcock.Service.Application.Common.Commands
     /// <typeparam name="T">
     ///     The <see cref="ICommand" /> type that the handler will handle.
     /// </typeparam>
-    public interface ICommandHandler<in T>
-        where T : ICommand
+    internal interface ICommandHandler<in T>
+        where T : class, ICommand
     {
         /// <summary>
         ///     Handles the given <paramref name="command" />.

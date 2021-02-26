@@ -1,6 +1,6 @@
 using ThomasWoodcock.Service.Domain.SharedKernel.Results;
 
-namespace ThomasWoodcock.Service.Application.Common.Commands
+namespace ThomasWoodcock.Service.Application.Common.Commands.Validation
 {
     /// <summary>
     ///     Allows a class to act as a validator for application commands.
@@ -8,8 +8,8 @@ namespace ThomasWoodcock.Service.Application.Common.Commands
     /// <typeparam name="T">
     ///     The <see cref="ICommand" /> type that the validator will validate.
     /// </typeparam>
-    public interface ICommandValidator<in T>
-        where T : ICommand
+    internal interface ICommandValidator<in T>
+        where T : class, ICommand
     {
         /// <summary>
         ///     Validates the given <paramref name="command" />.

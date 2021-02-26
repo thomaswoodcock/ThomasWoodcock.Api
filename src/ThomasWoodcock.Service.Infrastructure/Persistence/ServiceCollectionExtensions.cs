@@ -21,28 +21,33 @@ namespace ThomasWoodcock.Service.Infrastructure.Persistence
         /// <param name="configuration">
         ///     The <see cref="IConfiguration" /> used to access application configuration.
         /// </param>
-        internal static void AddPersistence(this IServiceCollection collection, IConfiguration configuration)
+        public static void AddPersistence(this IServiceCollection collection, IConfiguration configuration)
+        {
+            collection.RegisterContext<AccountContext>(configuration);
+
+            collection.AddScoped<IAccountCommandRepository, EfAccountCommandRepository>();
+            collection.AddScoped<IAccountActivationKeyRepository, EfAccountActivationKeyRepository>();
+        }
+
+        private static void RegisterContext<T>(this IServiceCollection collection, IConfiguration configuration)
+            where T : DbContext
         {
             var options = configuration.GetSection(nameof(PersistenceOptions))
                 .Get<PersistenceOptions>();
 
             string databaseConnection = configuration.GetConnectionString("Database");
 
-            collection.AddDbContext<AccountContext>(builder =>
+            collection.AddDbContext<T>(builder =>
             {
                 if (options.UseSqliteDatabase)
                 {
-                    builder.UseSqlite(databaseConnection,
-                        opt => opt.MigrationsAssembly(typeof(AccountContext).Assembly.FullName));
+                    builder.UseSqlite(databaseConnection, opt => opt.MigrationsAssembly(typeof(T).Assembly.FullName));
                 }
                 else
                 {
                     builder.UseCosmos(databaseConnection, options.DatabaseName);
                 }
             });
-
-            collection.AddScoped<IAccountCommandRepository, EfAccountCommandRepository>();
-            collection.AddScoped<IAccountActivationKeyRepository, EfAccountActivationKeyRepository>();
         }
     }
 }
