@@ -16,7 +16,7 @@ namespace ThomasWoodcock.Service.Domain.SharedKernel.Results
         /// <param name="reason">
         ///     The reason that the operation failed.
         /// </param>
-        internal FailedResult(IFailureReason reason)
+        public FailedResult(IFailureReason reason)
         {
             this.FailureReason = reason ?? throw new ArgumentNullException(nameof(reason));
         }
@@ -43,7 +43,7 @@ namespace ThomasWoodcock.Service.Domain.SharedKernel.Results
         /// <summary>
         ///     Initializes a new instance of the <see cref="FailedResult{T}" /> class.
         /// </summary>
-        internal FailedResult(IFailureReason reason)
+        public FailedResult(IFailureReason reason)
             : base(reason)
         {
         }

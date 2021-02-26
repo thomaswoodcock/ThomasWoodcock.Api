@@ -6,6 +6,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+            <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
         <PackageReference Include="NSubstitute" Version="4.2.2" />
         <PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.14" />
@@ -22,6 +28,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\ThomasWoodcock.Service.Application\ThomasWoodcock.Service.Application.csproj" />
+        <ProjectReference Include="..\ThomasWoodcock.Service.Domain.UnitTests\ThomasWoodcock.Service.Domain.UnitTests.csproj" />
     </ItemGroup>
 
 </Project>

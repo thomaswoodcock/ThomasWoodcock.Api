@@ -47,55 +47,53 @@ namespace ThomasWoodcock.Service.Domain.SharedKernel
         /// <remarks>
         ///     https://docs.microsoft.com/en-us/dotnet/standard/base-types/how-to-verify-that-strings-are-in-valid-email-format
         /// </remarks>
-        internal static IResult<EmailAddress> Create(string emailAddress)
-        {
-            return !IsValidEmail(emailAddress)
+        internal static IResult<EmailAddress> Create(string emailAddress) =>
+            !EmailAddress.IsValid(emailAddress)
                 ? Result.Failure<EmailAddress>(new InvalidFormatFailure())
                 : Result.Success(new EmailAddress(emailAddress));
 
-            static bool IsValidEmail(string email)
+        public static bool IsValid(string emailAddress)
+        {
+            if (string.IsNullOrWhiteSpace(emailAddress))
             {
-                if (string.IsNullOrWhiteSpace(email))
-                {
-                    return false;
-                }
+                return false;
+            }
 
-                try
-                {
-                    // Checks that the email address contains a valid domain name.
-                    email = Regex.Replace(email, @"(@)(.+)$", DomainMapper, RegexOptions.None,
-                        TimeSpan.FromMilliseconds(200));
+            try
+            {
+                // Checks that the email address contains a valid domain name.
+                emailAddress = Regex.Replace(emailAddress, @"(@)(.+)$", DomainMapper, RegexOptions.None,
+                    TimeSpan.FromMilliseconds(200));
 
-                    static string DomainMapper(Match match)
-                    {
-                        IdnMapping idn = new();
+                static string DomainMapper(Match match)
+                {
+                    IdnMapping idn = new();
 
-                        string domainName = idn.GetAscii(match.Groups[2]
-                            .Value);
+                    string domainName = idn.GetAscii(match.Groups[2]
+                        .Value);
 
-                        return match.Groups[1]
-                            .Value + domainName;
-                    }
+                    return match.Groups[1]
+                        .Value + domainName;
                 }
-                catch (RegexMatchTimeoutException)
-                {
-                    return false;
-                }
-                catch (ArgumentException)
-                {
-                    return false;
-                }
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
 
-                try
-                {
-                    // Checks that the email address is in a valid format.
-                    return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase,
-                        TimeSpan.FromMilliseconds(250));
-                }
-                catch (RegexMatchTimeoutException)
-                {
-                    return false;
-                }
+            try
+            {
+                // Checks that the email address is in a valid format.
+                return Regex.IsMatch(emailAddress, @"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase,
+                    TimeSpan.FromMilliseconds(250));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
             }
         }
     }

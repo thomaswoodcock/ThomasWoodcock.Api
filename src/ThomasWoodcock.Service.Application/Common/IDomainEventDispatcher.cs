@@ -8,7 +8,7 @@ namespace ThomasWoodcock.Service.Application.Common
     /// <summary>
     ///     Allows a class to act as a dispatcher of domain events.
     /// </summary>
-    public interface IDomainEventDispatcher
+    internal interface IDomainEventDispatcher
     {
         /// <summary>
         ///     Dispatches one or more domain events.

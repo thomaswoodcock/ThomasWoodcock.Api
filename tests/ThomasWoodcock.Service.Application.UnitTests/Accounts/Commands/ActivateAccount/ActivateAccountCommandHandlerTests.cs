@@ -12,7 +12,7 @@ using ThomasWoodcock.Service.Application.Accounts.Commands.ActivateAccount;
 using ThomasWoodcock.Service.Application.Accounts.Entities;
 using ThomasWoodcock.Service.Application.Accounts.FailureReasons;
 using ThomasWoodcock.Service.Application.Common;
-using ThomasWoodcock.Service.Application.Common.Commands;
+using ThomasWoodcock.Service.Application.Common.Commands.Validation;
 using ThomasWoodcock.Service.Domain.Accounts;
 using ThomasWoodcock.Service.Domain.Accounts.DomainEvents;
 using ThomasWoodcock.Service.Domain.Accounts.FailureReasons;

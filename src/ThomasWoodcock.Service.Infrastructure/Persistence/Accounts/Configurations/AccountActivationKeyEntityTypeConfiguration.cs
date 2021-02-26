@@ -11,7 +11,7 @@ namespace ThomasWoodcock.Service.Infrastructure.Persistence.Accounts.Configurati
     ///     An implementation of the <see cref="IEntityTypeConfiguration{TEntity}" /> interface used to configure Entity
     ///     Framework <see cref="AccountActivationKey" /> entities.
     /// </summary>
-    public sealed class AccountActivationKeyEntityTypeConfiguration : IEntityTypeConfiguration<AccountActivationKey>
+    internal sealed class AccountActivationKeyEntityTypeConfiguration : IEntityTypeConfiguration<AccountActivationKey>
     {
         /// <inheritdoc />
         public void Configure(EntityTypeBuilder<AccountActivationKey> builder)

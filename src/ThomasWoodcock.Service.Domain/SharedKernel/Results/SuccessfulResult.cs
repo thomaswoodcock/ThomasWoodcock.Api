@@ -32,7 +32,7 @@ namespace ThomasWoodcock.Service.Domain.SharedKernel.Results
         /// <param name="value">
         ///     The value contained within the result.
         /// </param>
-        internal SuccessfulResult(T value)
+        public SuccessfulResult(T value)
         {
             this.Value = value;
         }
