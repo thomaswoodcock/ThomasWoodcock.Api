@@ -10,6 +10,7 @@ using ThomasWoodcock.Service.Application.Accounts.Commands;
 using ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount;
 using ThomasWoodcock.Service.Application.Common;
 using ThomasWoodcock.Service.Application.Common.Commands.Validation;
+using ThomasWoodcock.Service.Application.Common.Cryptography;
 using ThomasWoodcock.Service.Domain.Accounts;
 using ThomasWoodcock.Service.Domain.Accounts.DomainEvents;
 using ThomasWoodcock.Service.Domain.Accounts.FailureReasons;
@@ -252,7 +253,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
                 // Assert
                 await this._fixture.Dispatcher.Received(1)
                     .DispatchAsync(Arg.Is<IEnumerable<IDomainEvent>>(events => events.Any(e =>
-                        e is AccountCreatedEvent && ((AccountCreatedEvent) e).Account.Id == this._fixture.AccountId)));
+                        e is AccountCreatedEvent && ((AccountCreatedEvent)e).Account.Id == this._fixture.AccountId)));
             }
         }
 

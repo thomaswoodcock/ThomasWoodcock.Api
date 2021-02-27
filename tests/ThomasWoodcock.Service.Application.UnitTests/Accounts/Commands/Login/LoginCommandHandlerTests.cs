@@ -6,8 +6,8 @@ using NSubstitute.ReturnsExtensions;
 
 using ThomasWoodcock.Service.Application.Accounts.Commands;
 using ThomasWoodcock.Service.Application.Accounts.Commands.Login;
-using ThomasWoodcock.Service.Application.Common;
 using ThomasWoodcock.Service.Application.Common.Commands.Validation;
+using ThomasWoodcock.Service.Application.Common.Cryptography;
 using ThomasWoodcock.Service.Domain.Accounts;
 using ThomasWoodcock.Service.Domain.Accounts.FailureReasons;
 using ThomasWoodcock.Service.Domain.SharedKernel.Results;
