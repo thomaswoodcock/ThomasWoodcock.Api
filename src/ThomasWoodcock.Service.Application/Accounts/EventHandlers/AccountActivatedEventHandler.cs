@@ -3,14 +3,16 @@ using System.Threading.Tasks;
 
 using ThomasWoodcock.Service.Application.Accounts.Commands;
 using ThomasWoodcock.Service.Application.Accounts.Entities;
+using ThomasWoodcock.Service.Application.Common.DomainEvents;
 using ThomasWoodcock.Service.Domain.Accounts.DomainEvents;
 
 namespace ThomasWoodcock.Service.Application.Accounts.EventHandlers
 {
+    /// <inheritdoc />
     /// <summary>
     ///     A handler for <see cref="AccountActivatedEvent" /> objects.
     /// </summary>
-    internal sealed class AccountActivatedEventHandler
+    internal sealed class AccountActivatedEventHandler : IDomainEventHandler<AccountActivatedEvent>
     {
         private readonly IAccountActivationKeyRepository _repository;
 
@@ -25,15 +27,7 @@ namespace ThomasWoodcock.Service.Application.Accounts.EventHandlers
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        /// <summary>
-        ///     Handles the given <paramref name="activatedEvent" />.
-        /// </summary>
-        /// <param name="activatedEvent">
-        ///     The event to handle.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///     Thrown if the given <paramref name="activatedEvent" /> is null.
-        /// </exception>
+        /// <inheritdoc />
         public async Task HandleAsync(AccountActivatedEvent activatedEvent)
         {
             if (activatedEvent == null)

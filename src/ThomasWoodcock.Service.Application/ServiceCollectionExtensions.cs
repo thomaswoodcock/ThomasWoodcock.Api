@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
 using ThomasWoodcock.Service.Application.Common.Commands.Validation;
+using ThomasWoodcock.Service.Application.Common.DomainEvents;
 
 namespace ThomasWoodcock.Service.Application
 {
@@ -18,6 +19,7 @@ namespace ThomasWoodcock.Service.Application
         public static void AddApplication(this IServiceCollection collection)
         {
             collection.AddCommandValidation();
+            collection.AddDomainEvents();
         }
     }
 }

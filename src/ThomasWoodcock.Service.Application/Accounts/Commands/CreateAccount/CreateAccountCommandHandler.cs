@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
 
-using ThomasWoodcock.Service.Application.Common;
 using ThomasWoodcock.Service.Application.Common.Commands;
 using ThomasWoodcock.Service.Application.Common.Commands.Validation;
 using ThomasWoodcock.Service.Application.Common.Cryptography;
+using ThomasWoodcock.Service.Application.Common.DomainEvents;
 using ThomasWoodcock.Service.Domain.Accounts;
 using ThomasWoodcock.Service.Domain.Accounts.FailureReasons;
 using ThomasWoodcock.Service.Domain.SharedKernel.Results;

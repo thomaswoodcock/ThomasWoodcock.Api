@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 using ThomasWoodcock.Service.Domain.SeedWork;
 
-namespace ThomasWoodcock.Service.Application.Common
+namespace ThomasWoodcock.Service.Application.Common.DomainEvents
 {
     /// <summary>
     ///     Allows a class to act as a dispatcher of domain events.
