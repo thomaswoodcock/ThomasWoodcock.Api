@@ -11,8 +11,8 @@ using ThomasWoodcock.Service.Application.Accounts.Commands;
 using ThomasWoodcock.Service.Application.Accounts.Commands.ActivateAccount;
 using ThomasWoodcock.Service.Application.Accounts.Entities;
 using ThomasWoodcock.Service.Application.Accounts.FailureReasons;
-using ThomasWoodcock.Service.Application.Common;
 using ThomasWoodcock.Service.Application.Common.Commands.Validation;
+using ThomasWoodcock.Service.Application.Common.DomainEvents;
 using ThomasWoodcock.Service.Domain.Accounts;
 using ThomasWoodcock.Service.Domain.Accounts.DomainEvents;
 using ThomasWoodcock.Service.Domain.Accounts.FailureReasons;
@@ -216,7 +216,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
                 // Assert
                 await this._fixture.Dispatcher.Received(1)
                     .DispatchAsync(Arg.Is<IEnumerable<IDomainEvent>>(events => events.Any(e =>
-                        e is AccountActivatedEvent && ((AccountActivatedEvent) e).Account == this._account)));
+                        e is AccountActivatedEvent && ((AccountActivatedEvent)e).Account == this._account)));
             }
         }
 

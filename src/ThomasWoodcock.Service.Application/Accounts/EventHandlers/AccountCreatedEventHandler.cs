@@ -4,15 +4,17 @@ using System.Threading.Tasks;
 using ThomasWoodcock.Service.Application.Accounts.Commands;
 using ThomasWoodcock.Service.Application.Accounts.Entities;
 using ThomasWoodcock.Service.Application.Accounts.Notifications;
+using ThomasWoodcock.Service.Application.Common.DomainEvents;
 using ThomasWoodcock.Service.Application.Common.Notifications;
 using ThomasWoodcock.Service.Domain.Accounts.DomainEvents;
 
 namespace ThomasWoodcock.Service.Application.Accounts.EventHandlers
 {
+    /// <inheritdoc />
     /// <summary>
     ///     A handler for <see cref="AccountCreatedEvent" /> objects.
     /// </summary>
-    internal sealed class AccountCreatedEventHandler
+    internal sealed class AccountCreatedEventHandler : IDomainEventHandler<AccountCreatedEvent>
     {
         private readonly IAccountActivationKeyRepository _repository;
         private readonly INotificationSender _sender;
@@ -32,15 +34,7 @@ namespace ThomasWoodcock.Service.Application.Accounts.EventHandlers
             this._sender = sender ?? throw new ArgumentNullException(nameof(sender));
         }
 
-        /// <summary>
-        ///     Handles the given <paramref name="createdEvent" />.
-        /// </summary>
-        /// <param name="createdEvent">
-        ///     The event to handle.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///     Thrown if the given <paramref name="createdEvent" /> is null.
-        /// </exception>
+        /// <inheritdoc />
         public async Task HandleAsync(AccountCreatedEvent createdEvent)
         {
             if (createdEvent == null)
