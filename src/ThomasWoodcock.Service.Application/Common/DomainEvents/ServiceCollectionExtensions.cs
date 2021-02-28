@@ -37,16 +37,8 @@ namespace ThomasWoodcock.Service.Application.Common.DomainEvents
 
             foreach (Type handlerType in handlerTypes)
             {
-                Type interfaceType = handlerType.GetInterface("IDomainEventHandler`1");
-
-                if (interfaceType == null)
-                {
-                    continue;
-                }
-
                 // Register handler.
                 collection.AddScoped(typeof(IDomainEventHandler), handlerType);
-                collection.AddScoped(interfaceType, handlerType);
             }
         }
     }

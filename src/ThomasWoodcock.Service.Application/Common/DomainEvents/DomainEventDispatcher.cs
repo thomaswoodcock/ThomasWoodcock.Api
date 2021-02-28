@@ -27,27 +27,23 @@ namespace ThomasWoodcock.Service.Application.Common.DomainEvents
         }
 
         /// <inheritdoc />
-        public Task DispatchAsync(IEnumerable<IDomainEvent> domainEvents)
+        public async Task DispatchAsync(IEnumerable<IDomainEvent> domainEvents)
         {
             if (domainEvents == null)
             {
                 throw new ArgumentNullException(nameof(domainEvents));
             }
 
-            foreach (IDomainEvent domainEvent in domainEvents)
+            IEnumerable<Task> tasks = domainEvents.SelectMany(domainEvent =>
             {
                 Type handlerType = typeof(IDomainEventHandler<>).MakeGenericType(domainEvent.GetType());
 
-                IEnumerable<IDomainEventHandler> handlers = this._eventHandlers.Where(handler => handler.GetType()
-                    .IsAssignableTo(handlerType));
+                return this._eventHandlers.Where(handler => handler.GetType()
+                        .IsAssignableTo(handlerType))
+                    .Select(handler => handler.HandleAsync(domainEvent));
+            });
 
-                foreach (IDomainEventHandler eventHandler in handlers)
-                {
-                    Task.Run(() => eventHandler.HandleAsync(domainEvent));
-                }
-            }
-
-            return Task.CompletedTask;
+            await Task.WhenAll(tasks);
         }
     }
 }
