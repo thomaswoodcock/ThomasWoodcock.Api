@@ -23,6 +23,8 @@ namespace ThomasWoodcock.Service.Application.Common.Commands
         {
             collection.AutoRegisterCommandHandlers();
             collection.AddCommandValidation();
+
+            collection.AddScoped<ICommandSender, CommandSender>();
         }
 
         private static void AutoRegisterCommandHandlers(this IServiceCollection collection)
