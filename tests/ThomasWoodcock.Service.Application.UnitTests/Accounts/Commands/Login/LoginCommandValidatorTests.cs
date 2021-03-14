@@ -30,10 +30,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Login
             public void InvalidEmailAddress_Validate_ReturnsFailedResult(string emailAddress)
             {
                 // Arrange Act
-                IResult result = this._fixture.Sut.Validate(new LoginCommand
-                {
-                    EmailAddress = emailAddress, Password = "TestPassword123"
-                });
+                IResult result = this._fixture.Sut.Validate(new LoginCommand(emailAddress, "TestPassword123"));
 
                 // Assert
                 Assert.True(result.IsFailed);
@@ -54,10 +51,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Login
             public void InvalidPassword_Validate_ReturnsFailedResult(string password)
             {
                 // Arrange Act
-                IResult result = this._fixture.Sut.Validate(new LoginCommand
-                {
-                    EmailAddress = "test@test.com", Password = password
-                });
+                IResult result = this._fixture.Sut.Validate(new LoginCommand("test@test.com", password));
 
                 // Assert
                 Assert.True(result.IsFailed);
@@ -74,10 +68,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Login
             public void ValidCommand_Validate_ReturnsSuccessfulResult()
             {
                 // Arrange Act
-                IResult result = this._fixture.Sut.Validate(new LoginCommand
-                {
-                    EmailAddress = "test@test.com", Password = "TestPassword123"
-                });
+                IResult result = this._fixture.Sut.Validate(new LoginCommand("test@test.com", "TestPassword123"));
 
                 // Assert
                 Assert.True(result.IsSuccessful);

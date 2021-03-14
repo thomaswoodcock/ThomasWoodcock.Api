@@ -151,7 +151,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Login
             public Fixture()
             {
                 this.Sut = new LoginCommandHandler(this.Validator, this.Repository, this.Hasher);
-                this.Command = new LoginCommand { EmailAddress = "test@test.com", Password = "TestPassword123" };
+                this.Command = new LoginCommand("test@test.com", "TestPassword123");
 
                 this.Account = Account.Create(new Guid("C8F52736-A492-4606-91BB-AC83241B26C0"), "Test Name",
                         "test@test.com", "HashedPassword")

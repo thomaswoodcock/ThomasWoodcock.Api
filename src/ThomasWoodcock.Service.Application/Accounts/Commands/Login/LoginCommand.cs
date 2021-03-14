@@ -2,20 +2,15 @@ using ThomasWoodcock.Service.Application.Common.Commands;
 
 namespace ThomasWoodcock.Service.Application.Accounts.Commands.Login
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="ICommand" />
     /// <summary>
     ///     Represents a command to login to an account.
     /// </summary>
-    internal sealed class LoginCommand : ICommand
-    {
-        /// <summary>
-        ///     Gets or sets the email address of the account that will be logged in.
-        /// </summary>
-        public string EmailAddress { get; init; }
-
-        /// <summary>
-        ///     Gets or sets the password for the account that will be logged in.
-        /// </summary>
-        public string Password { get; init; }
-    }
+    /// <param name="EmailAddress">
+    ///     The email address of the account that will be logged in.
+    /// </param>
+    /// <param name="Password">
+    ///     The password for the account that will be logged in.
+    /// </param>
+    internal sealed record LoginCommand(string EmailAddress, string Password) : ICommand;
 }
