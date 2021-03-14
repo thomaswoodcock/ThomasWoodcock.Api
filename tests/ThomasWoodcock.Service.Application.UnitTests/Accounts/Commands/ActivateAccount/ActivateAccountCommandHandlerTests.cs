@@ -81,10 +81,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
                 this._account = Account.Create(this._fixture.AccountId, "Test Name", "test@test.com", "TestPassword123")
                     .Value;
 
-                this._command = new ActivateAccountCommand
-                {
-                    AccountId = this._fixture.AccountId, ActivationKey = this._fixture.ActivationKey
-                };
+                this._command = new ActivateAccountCommand(this._fixture.AccountId, this._fixture.ActivationKey);
 
                 this._fixture.Validator.Validate(this._command)
                     .Returns(Result.Success());
