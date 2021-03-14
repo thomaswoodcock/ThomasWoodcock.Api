@@ -137,13 +137,8 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
             public async Task EmptyAccountId_HandleAsync_ReturnsFailedResult()
             {
                 // Arrange Act
-                IResult result = await this._fixture.Sut.HandleAsync(new CreateAccountCommand
-                {
-                    Id = Guid.Empty,
-                    Name = "Test Name",
-                    EmailAddress = "test@test.com",
-                    Password = "TestPassword123"
-                });
+                IResult result = await this._fixture.Sut.HandleAsync(new CreateAccountCommand(Guid.Empty, "Test Name",
+                    "test@test.com", "TestPassword123"));
 
                 // Assert
                 Assert.True(result.IsFailed);
@@ -158,13 +153,8 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
             public async Task NullEmptyOrWhiteSpaceAccountName_HandleAsync_ReturnsFailedResult(string accountName)
             {
                 // Arrange Act
-                IResult result = await this._fixture.Sut.HandleAsync(new CreateAccountCommand
-                {
-                    Id = this._fixture.AccountId,
-                    Name = accountName,
-                    EmailAddress = "test@test.com",
-                    Password = "TestPassword123"
-                });
+                IResult result = await this._fixture.Sut.HandleAsync(new CreateAccountCommand(this._fixture.AccountId,
+                    accountName, "test@test.com", "TestPassword123"));
 
                 // Assert
                 Assert.True(result.IsFailed);
@@ -182,13 +172,8 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
             public async Task InvalidEmailAddress_HandleAsync_ReturnsFailedResult(string emailAddress)
             {
                 // Arrange Act
-                IResult result = await this._fixture.Sut.HandleAsync(new CreateAccountCommand
-                {
-                    Id = this._fixture.AccountId,
-                    Name = "Test Name",
-                    EmailAddress = emailAddress,
-                    Password = "TestPassword123"
-                });
+                IResult result = await this._fixture.Sut.HandleAsync(new CreateAccountCommand(this._fixture.AccountId,
+                    "Test Name", emailAddress, "TestPassword123"));
 
                 // Assert
                 Assert.True(result.IsFailed);
@@ -204,13 +189,8 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
                 string accountPassword)
             {
                 // Arrange Act
-                IResult result = await this._fixture.Sut.HandleAsync(new CreateAccountCommand
-                {
-                    Id = this._fixture.AccountId,
-                    Name = "Test Name",
-                    EmailAddress = "test@test.com",
-                    Password = accountPassword
-                });
+                IResult result = await this._fixture.Sut.HandleAsync(new CreateAccountCommand(this._fixture.AccountId,
+                    "Test Name", "test@test.com", accountPassword));
 
                 // Assert
                 Assert.True(result.IsFailed);
@@ -277,13 +257,8 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
                 this.Sut = new CreateAccountCommandHandler(this.Validator, this.Repository, this.Hasher,
                     this.Dispatcher);
 
-                this.Command = new CreateAccountCommand
-                {
-                    Id = this.AccountId,
-                    Name = "Test Account",
-                    EmailAddress = "test@test.com",
-                    Password = "TestPassword123"
-                };
+                this.Command =
+                    new CreateAccountCommand(this.AccountId, "Test Account", "test@test.com", "TestPassword123");
 
                 this.Account = Account.Create(this.AccountId, "Test Account", "test@test.com", "TestPassword123")
                     .Value;
