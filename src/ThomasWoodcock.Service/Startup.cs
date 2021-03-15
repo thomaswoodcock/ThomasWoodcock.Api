@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using ThomasWoodcock.Service.Application;
 using ThomasWoodcock.Service.Infrastructure;
 using ThomasWoodcock.Service.WebApi.Controllers;
 
@@ -23,7 +22,6 @@ namespace ThomasWoodcock.Service
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplication();
             services.AddInfrastructure(this._configuration);
 
             services.AddControllers()

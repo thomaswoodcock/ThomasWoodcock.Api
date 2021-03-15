@@ -11,7 +11,7 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.Login
     internal sealed class LoginCommandValidatorConfiguration : ICommandValidatorConfiguration<LoginCommand>
     {
         /// <inheritdoc />
-        public void Configure(CommandValidatorBuilder<LoginCommand> builder)
+        public void Configure(ICommandValidatorBuilder<LoginCommand> builder)
         {
             builder.Property(command => command.EmailAddress)
                 .IsValidEmailAddress();

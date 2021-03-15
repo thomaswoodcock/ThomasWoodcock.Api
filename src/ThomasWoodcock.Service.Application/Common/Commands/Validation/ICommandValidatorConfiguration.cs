@@ -15,6 +15,6 @@
         /// <param name="builder">
         ///     Provides validation methods for the command.
         /// </param>
-        void Configure(CommandValidatorBuilder<T> builder);
+        void Configure(ICommandValidatorBuilder<T> builder);
     }
 }

@@ -40,7 +40,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
             {
                 // Arrange Act Assert
                 Assert.Throws<ArgumentNullException>(() => new ActivateAccountCommandHandler(null,
-                    this._fixture.AccountRepository, this._fixture.KeyRepository, this._fixture.Dispatcher));
+                    this._fixture.AccountRepository, this._fixture.KeyRepository, this._fixture.Publisher));
             }
 
             [Fact]
@@ -48,7 +48,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
             {
                 // Arrange Act Assert
                 Assert.Throws<ArgumentNullException>(() => new ActivateAccountCommandHandler(this._fixture.Validator,
-                    null, this._fixture.KeyRepository, this._fixture.Dispatcher));
+                    null, this._fixture.KeyRepository, this._fixture.Publisher));
             }
 
             [Fact]
@@ -56,11 +56,11 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
             {
                 // Arrange Act Assert
                 Assert.Throws<ArgumentNullException>(() => new ActivateAccountCommandHandler(this._fixture.Validator,
-                    this._fixture.AccountRepository, null, this._fixture.Dispatcher));
+                    this._fixture.AccountRepository, null, this._fixture.Publisher));
             }
 
             [Fact]
-            public void NullDispatcher_Constructor_ThrowsArgumentNullException()
+            public void NullPublisher_Constructor_ThrowsArgumentNullException()
             {
                 // Arrange Act Assert
                 Assert.Throws<ArgumentNullException>(() => new ActivateAccountCommandHandler(this._fixture.Validator,
@@ -92,7 +92,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
                 this._fixture.KeyRepository.GetAsync(this._account)
                     .Returns(new AccountActivationKey(this._fixture.ActivationKey));
 
-                this._fixture.Dispatcher.ClearSubstitute();
+                this._fixture.Publisher.ClearSubstitute();
             }
 
             [Fact]
@@ -205,14 +205,14 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
             }
 
             [Fact]
-            public async Task ValidCommand_HandleAsync_DispatchesDomainEvent()
+            public async Task ValidCommand_HandleAsync_PublishesDomainEvent()
             {
                 // Arrange Act
                 IResult _ = await this._fixture.Sut.HandleAsync(this._command);
 
                 // Assert
-                await this._fixture.Dispatcher.Received(1)
-                    .DispatchAsync(Arg.Is<IEnumerable<IDomainEvent>>(events => events.Any(e =>
+                await this._fixture.Publisher.Received(1)
+                    .PublishAsync(Arg.Is<IEnumerable<IDomainEvent>>(events => events.Any(e =>
                         e is AccountActivatedEvent && ((AccountActivatedEvent)e).Account == this._account)));
             }
         }
@@ -226,10 +226,11 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
             internal readonly Guid AccountId = new("324A2ECA-1D1E-46FC-98A5-D4A668A07425");
             internal readonly IAccountCommandRepository AccountRepository = Substitute.For<IAccountCommandRepository>();
             internal readonly Guid ActivationKey = new("127C3DCC-0248-4A66-8094-5BFD25E8C874");
-            internal readonly IDomainEventDispatcher Dispatcher = Substitute.For<IDomainEventDispatcher>();
 
             internal readonly IAccountActivationKeyRepository KeyRepository =
                 Substitute.For<IAccountActivationKeyRepository>();
+
+            internal readonly IDomainEventPublisher Publisher = Substitute.For<IDomainEventPublisher>();
 
             internal readonly ICommandValidator<ActivateAccountCommand> Validator =
                 Substitute.For<ICommandValidator<ActivateAccountCommand>>();
@@ -237,7 +238,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
             public Fixture()
             {
                 this.Sut = new ActivateAccountCommandHandler(this.Validator, this.AccountRepository, this.KeyRepository,
-                    this.Dispatcher);
+                    this.Publisher);
             }
 
             internal ActivateAccountCommandHandler Sut { get; }

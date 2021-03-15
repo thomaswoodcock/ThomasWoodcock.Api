@@ -19,8 +19,8 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.ActivateAccount
     internal sealed class ActivateAccountCommandHandler : ICommandHandler<ActivateAccountCommand>
     {
         private readonly IAccountCommandRepository _accountRepository;
-        private readonly IDomainEventDispatcher _dispatcher;
         private readonly IAccountActivationKeyRepository _keyRepository;
+        private readonly IDomainEventPublisher _publisher;
         private readonly ICommandValidator<ActivateAccountCommand> _validator;
 
         /// <summary>
@@ -35,17 +35,17 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.ActivateAccount
         /// <param name="keyRepository">
         ///     The <see cref="IAccountActivationKeyRepository" /> used to retrieve account activation keys.
         /// </param>
-        /// <param name="dispatcher">
-        ///     The <see cref="IDomainEventDispatcher" /> used to dispatch domain events.
+        /// <param name="publisher">
+        ///     The <see cref="IDomainEventPublisher" /> used to publish domain events.
         /// </param>
         public ActivateAccountCommandHandler(ICommandValidator<ActivateAccountCommand> validator,
             IAccountCommandRepository accountRepository, IAccountActivationKeyRepository keyRepository,
-            IDomainEventDispatcher dispatcher)
+            IDomainEventPublisher publisher)
         {
             this._validator = validator ?? throw new ArgumentNullException(nameof(validator));
             this._accountRepository = accountRepository ?? throw new ArgumentNullException(nameof(accountRepository));
             this._keyRepository = keyRepository ?? throw new ArgumentNullException(nameof(keyRepository));
-            this._dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
+            this._publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
         }
 
         /// <inheritdoc />
@@ -86,7 +86,7 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.ActivateAccount
 
             await this._accountRepository.SaveAsync();
 
-            await this._dispatcher.DispatchAsync(account.DomainEvents);
+            await this._publisher.PublishAsync(account.DomainEvents);
 
             return Result.Success();
         }

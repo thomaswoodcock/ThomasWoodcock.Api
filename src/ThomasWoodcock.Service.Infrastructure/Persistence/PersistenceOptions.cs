@@ -1,9 +1,10 @@
 namespace ThomasWoodcock.Service.Infrastructure.Persistence
 {
+    /// <inheritdoc />
     /// <summary>
     ///     Represents persistence-related application options.
     /// </summary>
-    internal sealed class PersistenceOptions
+    internal sealed record PersistenceOptions
     {
         /// <summary>
         ///     Gets or sets the database name to use when connecting via Cosmos DB.

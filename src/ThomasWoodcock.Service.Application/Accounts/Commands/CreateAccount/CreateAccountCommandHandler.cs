@@ -17,8 +17,8 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount
     /// </summary>
     internal sealed class CreateAccountCommandHandler : ICommandHandler<CreateAccountCommand>
     {
-        private readonly IDomainEventDispatcher _dispatcher;
         private readonly IPasswordHasher _hasher;
+        private readonly IDomainEventPublisher _publisher;
         private readonly IAccountCommandRepository _repository;
         private readonly ICommandValidator<CreateAccountCommand> _validator;
 
@@ -34,16 +34,16 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount
         /// <param name="hasher">
         ///     The <see cref="IPasswordHasher" /> used to hash passwords.
         /// </param>
-        /// <param name="dispatcher">
-        ///     The <see cref="IDomainEventDispatcher" /> used to dispatch domain events.
+        /// <param name="publisher">
+        ///     The <see cref="IDomainEventPublisher" /> used to publish domain events.
         /// </param>
         public CreateAccountCommandHandler(ICommandValidator<CreateAccountCommand> validator,
-            IAccountCommandRepository repository, IPasswordHasher hasher, IDomainEventDispatcher dispatcher)
+            IAccountCommandRepository repository, IPasswordHasher hasher, IDomainEventPublisher publisher)
         {
             this._validator = validator ?? throw new ArgumentNullException(nameof(validator));
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
             this._hasher = hasher ?? throw new ArgumentNullException(nameof(hasher));
-            this._dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
+            this._publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
         }
 
         /// <inheritdoc />
@@ -81,7 +81,7 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount
             this._repository.Add(accountResult.Value);
             await this._repository.SaveAsync();
 
-            await this._dispatcher.DispatchAsync(accountResult.Value.DomainEvents);
+            await this._publisher.PublishAsync(accountResult.Value.DomainEvents);
 
             return Result.Success();
         }

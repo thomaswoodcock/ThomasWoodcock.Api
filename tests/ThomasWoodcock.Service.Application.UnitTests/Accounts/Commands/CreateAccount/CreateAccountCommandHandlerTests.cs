@@ -39,7 +39,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
                 // Arrange Act Assert
                 Assert.Throws<ArgumentNullException>(() =>
                     new CreateAccountCommandHandler(null, this._fixture.Repository, this._fixture.Hasher,
-                        this._fixture.Dispatcher));
+                        this._fixture.Publisher));
             }
 
             [Fact]
@@ -48,7 +48,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
                 // Arrange Act Assert
                 Assert.Throws<ArgumentNullException>(() =>
                     new CreateAccountCommandHandler(this._fixture.Validator, null, this._fixture.Hasher,
-                        this._fixture.Dispatcher));
+                        this._fixture.Publisher));
             }
 
             [Fact]
@@ -56,11 +56,11 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
             {
                 // Arrange Act Assert
                 Assert.Throws<ArgumentNullException>(() => new CreateAccountCommandHandler(this._fixture.Validator,
-                    this._fixture.Repository, null, this._fixture.Dispatcher));
+                    this._fixture.Repository, null, this._fixture.Publisher));
             }
 
             [Fact]
-            public void NullDispatcher_Constructor_ThrowsArgumentNullException()
+            public void NullPublisher_Constructor_ThrowsArgumentNullException()
             {
                 // Arrange Act Assert
                 Assert.Throws<ArgumentNullException>(() =>
@@ -85,7 +85,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
                 this._fixture.Hasher.Hash("TestPassword123")
                     .Returns("HashedPassword");
 
-                this._fixture.Dispatcher.ClearSubstitute();
+                this._fixture.Publisher.ClearSubstitute();
             }
 
             [Fact]
@@ -225,14 +225,14 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
             }
 
             [Fact]
-            public async Task ValidCommand_HandleAsync_DispatchesDomainEvent()
+            public async Task ValidCommand_HandleAsync_PublishesDomainEvent()
             {
                 // Arrange Act
                 IResult _ = await this._fixture.Sut.HandleAsync(this._fixture.Command);
 
                 // Assert
-                await this._fixture.Dispatcher.Received(1)
-                    .DispatchAsync(Arg.Is<IEnumerable<IDomainEvent>>(events => events.Any(e =>
+                await this._fixture.Publisher.Received(1)
+                    .PublishAsync(Arg.Is<IEnumerable<IDomainEvent>>(events => events.Any(e =>
                         e is AccountCreatedEvent && ((AccountCreatedEvent)e).Account.Id == this._fixture.AccountId)));
             }
         }
@@ -244,8 +244,8 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
         public sealed class Fixture
         {
             internal readonly Guid AccountId = new("019769F1-4197-4779-89C2-D764FE8AA8EB");
-            internal readonly IDomainEventDispatcher Dispatcher = Substitute.For<IDomainEventDispatcher>();
             internal readonly IPasswordHasher Hasher = Substitute.For<IPasswordHasher>();
+            internal readonly IDomainEventPublisher Publisher = Substitute.For<IDomainEventPublisher>();
 
             internal readonly IAccountCommandRepository Repository = Substitute.For<IAccountCommandRepository>();
 
@@ -255,7 +255,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
             public Fixture()
             {
                 this.Sut = new CreateAccountCommandHandler(this.Validator, this.Repository, this.Hasher,
-                    this.Dispatcher);
+                    this.Publisher);
 
                 this.Command =
                     new CreateAccountCommand(this.AccountId, "Test Account", "test@test.com", "TestPassword123");

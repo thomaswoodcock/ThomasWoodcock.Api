@@ -6,16 +6,16 @@ using ThomasWoodcock.Service.Domain.SeedWork;
 namespace ThomasWoodcock.Service.Application.Common.DomainEvents
 {
     /// <summary>
-    ///     Allows a class to act as a dispatcher of domain events.
+    ///     Allows a class to act as a publisher of domain events.
     /// </summary>
-    internal interface IDomainEventDispatcher
+    internal interface IDomainEventPublisher
     {
         /// <summary>
-        ///     Dispatches one or more domain events.
+        ///     Publishes one or more domain events.
         /// </summary>
         /// <param name="domainEvents">
-        ///     The domain events to dispatch.
+        ///     The domain events to publish.
         /// </param>
-        Task DispatchAsync(IEnumerable<IDomainEvent> domainEvents);
+        Task PublishAsync(IEnumerable<IDomainEvent> domainEvents);
     }
 }

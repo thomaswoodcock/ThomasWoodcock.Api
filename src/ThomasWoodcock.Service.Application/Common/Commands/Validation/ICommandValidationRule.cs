@@ -1,6 +1,6 @@
 ﻿using ThomasWoodcock.Service.Domain.SharedKernel.Results;
 
-namespace ThomasWoodcock.Service.Application.Common.Commands.Validation.Rules
+namespace ThomasWoodcock.Service.Application.Common.Commands.Validation
 {
     /// <summary>
     ///     Allows a class to act as a validation rule for a command.

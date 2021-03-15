@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-using ThomasWoodcock.Service.Infrastructure.Cryptography;
 using ThomasWoodcock.Service.Infrastructure.Persistence;
 
 namespace ThomasWoodcock.Service.Infrastructure
@@ -22,7 +21,6 @@ namespace ThomasWoodcock.Service.Infrastructure
         /// </param>
         public static void AddInfrastructure(this IServiceCollection collection, IConfiguration configuration)
         {
-            collection.AddCryptography();
             collection.AddPersistence(configuration);
         }
     }
