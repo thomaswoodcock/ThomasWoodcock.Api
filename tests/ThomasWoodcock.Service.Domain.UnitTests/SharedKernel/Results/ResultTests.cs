@@ -1,5 +1,3 @@
-using System;
-
 using ThomasWoodcock.Service.Domain.SharedKernel.Results;
 using ThomasWoodcock.Service.Domain.SharedKernel.Results.FailureReasons;
 
@@ -43,13 +41,6 @@ namespace ThomasWoodcock.Service.Domain.UnitTests.SharedKernel.Results
         public sealed class Failure
         {
             [Fact]
-            public void NullFailureReason_Failure_ThrowsArgumentNullException()
-            {
-                // Arrange Act Assert
-                Assert.Throws<ArgumentNullException>(() => Result.Failure(null));
-            }
-
-            [Fact]
             public void FailureReason_Failure_ReturnsFailedResult()
             {
                 // Arrange
@@ -67,13 +58,6 @@ namespace ThomasWoodcock.Service.Domain.UnitTests.SharedKernel.Results
 
         public sealed class TypedFailure
         {
-            [Fact]
-            public void NullFailureReason_TypedFailure_ThrowsArgumentNullException()
-            {
-                // Arrange Act Assert
-                Assert.Throws<ArgumentNullException>(() => Result.Failure<string>(null));
-            }
-
             [Fact]
             public void FailureReason_TypedFailure_ReturnsFailedResult()
             {
