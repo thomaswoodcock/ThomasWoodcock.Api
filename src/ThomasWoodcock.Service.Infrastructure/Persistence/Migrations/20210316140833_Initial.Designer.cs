@@ -9,7 +9,7 @@ using ThomasWoodcock.Service.Infrastructure.Persistence.Accounts;
 namespace ThomasWoodcock.Service.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AccountContext))]
-    [Migration("20210220105626_Initial")]
+    [Migration("20210316140833_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
