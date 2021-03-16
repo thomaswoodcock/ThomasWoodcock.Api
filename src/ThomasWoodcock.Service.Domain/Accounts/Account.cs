@@ -117,7 +117,7 @@ namespace ThomasWoodcock.Service.Domain.Accounts
 
             IResult<EmailAddress> emailResult = EmailAddress.Create(emailAddress);
 
-            if (emailResult.IsFailed)
+            if (emailResult.IsFailed || emailResult.Value == null)
             {
                 return Result.Failure<Account>(new InvalidAccountEmailFailure());
             }
