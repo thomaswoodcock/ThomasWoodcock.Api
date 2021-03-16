@@ -5,7 +5,7 @@ namespace ThomasWoodcock.Service.Application.Common.Cryptography
     /// <summary>
     ///     Allows a class to act as a password hasher.
     /// </summary>
-    internal interface IPasswordHasher
+    public interface IPasswordHasher
     {
         /// <summary>
         ///     Hashes the given <paramref name="password" />.
