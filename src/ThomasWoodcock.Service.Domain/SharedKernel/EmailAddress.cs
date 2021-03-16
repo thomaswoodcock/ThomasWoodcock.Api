@@ -7,10 +7,11 @@ using ThomasWoodcock.Service.Domain.SharedKernel.Results.FailureReasons;
 
 namespace ThomasWoodcock.Service.Domain.SharedKernel
 {
+    /// <inheritdoc />
     /// <summary>
     ///     Represents an email address.
     /// </summary>
-    public sealed partial class EmailAddress
+    public sealed partial record EmailAddress
     {
         private readonly string _value;
 
@@ -29,7 +30,7 @@ namespace ThomasWoodcock.Service.Domain.SharedKernel
         public override string ToString() => this._value;
     }
 
-    public sealed partial class EmailAddress
+    public sealed partial record EmailAddress
     {
         /// <summary>
         ///     Creates an <see cref="EmailAddress" />.
