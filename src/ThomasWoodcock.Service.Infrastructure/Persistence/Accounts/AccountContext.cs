@@ -1,3 +1,5 @@
+#pragma warning disable 8618
+
 using Microsoft.EntityFrameworkCore;
 
 using ThomasWoodcock.Service.Application.Accounts.Entities;

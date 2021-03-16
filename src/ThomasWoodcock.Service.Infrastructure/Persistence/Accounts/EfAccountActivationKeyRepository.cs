@@ -26,17 +26,12 @@ namespace ThomasWoodcock.Service.Infrastructure.Persistence.Accounts
         /// </param>
         public EfAccountActivationKeyRepository(AccountContext context)
         {
-            this._context = context ?? throw new ArgumentNullException(nameof(context));
+            this._context = context;
         }
 
         /// <inheritdoc />
-        public async Task<AccountActivationKey> GetAsync(Account account)
+        public async Task<AccountActivationKey?> GetAsync(Account account)
         {
-            if (account == null)
-            {
-                throw new ArgumentNullException(nameof(account));
-            }
-
             return await this._context.ActivationKeys.SingleOrDefaultAsync(key =>
                 EF.Property<Guid>(key, "AccountId") == account.Id);
         }
@@ -44,16 +39,6 @@ namespace ThomasWoodcock.Service.Infrastructure.Persistence.Accounts
         /// <inheritdoc />
         public void Add(Account account, AccountActivationKey activationKey)
         {
-            if (account == null)
-            {
-                throw new ArgumentNullException(nameof(account));
-            }
-
-            if (activationKey == null)
-            {
-                throw new ArgumentNullException(nameof(activationKey));
-            }
-
             this._context.Add(activationKey);
 
             this._context.Entry(activationKey)
@@ -64,11 +49,6 @@ namespace ThomasWoodcock.Service.Infrastructure.Persistence.Accounts
         /// <inheritdoc />
         public void Remove(AccountActivationKey activationKey)
         {
-            if (activationKey == null)
-            {
-                throw new ArgumentNullException(nameof(activationKey));
-            }
-
             this._context.Remove(activationKey);
         }
 

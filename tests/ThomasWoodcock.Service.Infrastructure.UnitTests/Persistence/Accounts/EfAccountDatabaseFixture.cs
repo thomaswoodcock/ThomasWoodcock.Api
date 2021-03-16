@@ -19,15 +19,15 @@ namespace ThomasWoodcock.Service.Infrastructure.UnitTests.Persistence.Accounts
             // Accounts
             this.Account = Account.Create(new Guid("191D440E-DEB4-4066-8529-371883A43144"), "Test Name",
                     "test@test.com", "TestPassword123")
-                .Value;
+                .Value ?? throw new InvalidOperationException();
 
             this.SecondAccount = Account.Create(new Guid("9C55DC7D-8019-4EDB-B866-A23FD56089E2"), "Test Name",
                     "second@test.com", "TestPassword123")
-                .Value;
+                .Value ?? throw new InvalidOperationException();
 
             Account accountForDeletedKey = Account.Create(new Guid("5A2A4A61-182C-4015-82C5-49AECC7C6886"), "Test Name",
                     "another@test.com", "TestPassword123")
-                .Value;
+                .Value ?? throw new InvalidOperationException();
 
             context.Accounts.AddRange(this.Account, this.SecondAccount, accountForDeletedKey);
 
