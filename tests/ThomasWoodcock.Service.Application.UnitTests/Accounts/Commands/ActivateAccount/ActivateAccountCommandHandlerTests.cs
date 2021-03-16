@@ -26,48 +26,6 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
 {
     public sealed class ActivateAccountCommandHandlerTests
     {
-        public sealed class Constructor : IClassFixture<Fixture>
-        {
-            private readonly Fixture _fixture;
-
-            public Constructor(Fixture fixture)
-            {
-                this._fixture = fixture;
-            }
-
-            [Fact]
-            public void NullValidator_Constructor_ThrowsArgumentNullException()
-            {
-                // Arrange Act Assert
-                Assert.Throws<ArgumentNullException>(() => new ActivateAccountCommandHandler(null,
-                    this._fixture.AccountRepository, this._fixture.KeyRepository, this._fixture.Publisher));
-            }
-
-            [Fact]
-            public void NullAccountRepository_Constructor_ThrowsArgumentNullException()
-            {
-                // Arrange Act Assert
-                Assert.Throws<ArgumentNullException>(() => new ActivateAccountCommandHandler(this._fixture.Validator,
-                    null, this._fixture.KeyRepository, this._fixture.Publisher));
-            }
-
-            [Fact]
-            public void NullKeyRepository_Constructor_ThrowsArgumentNullException()
-            {
-                // Arrange Act Assert
-                Assert.Throws<ArgumentNullException>(() => new ActivateAccountCommandHandler(this._fixture.Validator,
-                    this._fixture.AccountRepository, null, this._fixture.Publisher));
-            }
-
-            [Fact]
-            public void NullPublisher_Constructor_ThrowsArgumentNullException()
-            {
-                // Arrange Act Assert
-                Assert.Throws<ArgumentNullException>(() => new ActivateAccountCommandHandler(this._fixture.Validator,
-                    this._fixture.AccountRepository, this._fixture.KeyRepository, null));
-            }
-        }
-
         public sealed class HandleAsync : IClassFixture<Fixture>
         {
             private readonly Account _account;
@@ -79,7 +37,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
                 this._fixture = fixture;
 
                 this._account = Account.Create(this._fixture.AccountId, "Test Name", "test@test.com", "TestPassword123")
-                    .Value;
+                    .Value ?? throw new InvalidOperationException();
 
                 this._command = new ActivateAccountCommand(this._fixture.AccountId, this._fixture.ActivationKey);
 
@@ -89,7 +47,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
                 this._fixture.AccountRepository.GetAsync(this._fixture.AccountId)
                     .Returns(this._account);
 
-                this._fixture.KeyRepository.GetAsync(this._account)
+                this._fixture.KeyRepository.GetAsync(this._account ?? throw new InvalidOperationException())
                     .Returns(new AccountActivationKey(this._fixture.ActivationKey));
 
                 this._fixture.Publisher.ClearSubstitute();

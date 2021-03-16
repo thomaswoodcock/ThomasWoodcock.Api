@@ -24,51 +24,6 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
 {
     public sealed class CreateAccountCommandHandlerTests
     {
-        public sealed class Constructor : IClassFixture<Fixture>
-        {
-            private readonly Fixture _fixture;
-
-            public Constructor(Fixture fixture)
-            {
-                this._fixture = fixture;
-            }
-
-            [Fact]
-            public void NullValidator_Constructor_ThrowsArgumentNullException()
-            {
-                // Arrange Act Assert
-                Assert.Throws<ArgumentNullException>(() =>
-                    new CreateAccountCommandHandler(null, this._fixture.Repository, this._fixture.Hasher,
-                        this._fixture.Publisher));
-            }
-
-            [Fact]
-            public void NullRepository_Constructor_ThrowsArgumentNullException()
-            {
-                // Arrange Act Assert
-                Assert.Throws<ArgumentNullException>(() =>
-                    new CreateAccountCommandHandler(this._fixture.Validator, null, this._fixture.Hasher,
-                        this._fixture.Publisher));
-            }
-
-            [Fact]
-            public void NullHasher_Constructor_ThrowsArgumentNullException()
-            {
-                // Arrange Act Assert
-                Assert.Throws<ArgumentNullException>(() => new CreateAccountCommandHandler(this._fixture.Validator,
-                    this._fixture.Repository, null, this._fixture.Publisher));
-            }
-
-            [Fact]
-            public void NullPublisher_Constructor_ThrowsArgumentNullException()
-            {
-                // Arrange Act Assert
-                Assert.Throws<ArgumentNullException>(() =>
-                    new CreateAccountCommandHandler(this._fixture.Validator, this._fixture.Repository,
-                        this._fixture.Hasher, null));
-            }
-        }
-
         public sealed class HandleAsync : IClassFixture<Fixture>
         {
             private readonly Fixture _fixture;
@@ -261,7 +216,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
                     new CreateAccountCommand(this.AccountId, "Test Account", "test@test.com", "TestPassword123");
 
                 this.Account = Account.Create(this.AccountId, "Test Account", "test@test.com", "TestPassword123")
-                    .Value;
+                    .Value ?? throw new InvalidOperationException();
             }
 
             internal CreateAccountCommandHandler Sut { get; }

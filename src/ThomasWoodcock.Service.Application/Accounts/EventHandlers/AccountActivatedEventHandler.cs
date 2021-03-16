@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 
 using ThomasWoodcock.Service.Application.Accounts.Commands;
@@ -24,18 +23,13 @@ namespace ThomasWoodcock.Service.Application.Accounts.EventHandlers
         /// </param>
         public AccountActivatedEventHandler(IAccountActivationKeyRepository repository)
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = repository;
         }
 
         /// <inheritdoc />
         public async Task HandleAsync(AccountActivatedEvent activatedEvent)
         {
-            if (activatedEvent == null)
-            {
-                throw new ArgumentNullException(nameof(activatedEvent));
-            }
-
-            AccountActivationKey key = await this._repository.GetAsync(activatedEvent.Account);
+            AccountActivationKey? key = await this._repository.GetAsync(activatedEvent.Account);
 
             if (key == null)
             {

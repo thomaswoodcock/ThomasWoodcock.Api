@@ -19,7 +19,7 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands
         /// <returns>
         ///     The account associated with the given <paramref name="id" />.
         /// </returns>
-        Task<Account> GetAsync(Guid id);
+        Task<Account?> GetAsync(Guid id);
 
         /// <summary>
         ///     Retrieves an account with the given <paramref name="emailAddress" /> from the repository.
@@ -30,7 +30,7 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands
         /// <returns>
         ///     The account associated with the given <paramref name="emailAddress" />.
         /// </returns>
-        Task<Account> GetAsync(string emailAddress);
+        Task<Account?> GetAsync(string emailAddress);
 
         /// <summary>
         ///     Adds an account to the repository.

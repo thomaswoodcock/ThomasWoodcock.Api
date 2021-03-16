@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 
 using ThomasWoodcock.Service.Application.Accounts.Entities;
@@ -42,10 +41,10 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.ActivateAccount
             IAccountCommandRepository accountRepository, IAccountActivationKeyRepository keyRepository,
             IDomainEventPublisher publisher)
         {
-            this._validator = validator ?? throw new ArgumentNullException(nameof(validator));
-            this._accountRepository = accountRepository ?? throw new ArgumentNullException(nameof(accountRepository));
-            this._keyRepository = keyRepository ?? throw new ArgumentNullException(nameof(keyRepository));
-            this._publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
+            this._validator = validator;
+            this._accountRepository = accountRepository;
+            this._keyRepository = keyRepository;
+            this._publisher = publisher;
         }
 
         /// <inheritdoc />
@@ -58,14 +57,14 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.ActivateAccount
                 return validationResult;
             }
 
-            Account account = await this._accountRepository.GetAsync(command.AccountId);
+            Account? account = await this._accountRepository.GetAsync(command.AccountId);
 
             if (account == null)
             {
                 return Result.Failure(new AccountDoesNotExistFailure());
             }
 
-            AccountActivationKey activationKey = await this._keyRepository.GetAsync(account);
+            AccountActivationKey? activationKey = await this._keyRepository.GetAsync(account);
 
             if (activationKey == null)
             {

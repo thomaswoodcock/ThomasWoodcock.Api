@@ -30,18 +30,13 @@ namespace ThomasWoodcock.Service.Application.Accounts.EventHandlers
         /// </param>
         public AccountCreatedEventHandler(IAccountActivationKeyRepository repository, INotificationSender sender)
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            this._sender = sender ?? throw new ArgumentNullException(nameof(sender));
+            this._repository = repository;
+            this._sender = sender;
         }
 
         /// <inheritdoc />
         public async Task HandleAsync(AccountCreatedEvent createdEvent)
         {
-            if (createdEvent == null)
-            {
-                throw new ArgumentNullException(nameof(createdEvent));
-            }
-
             AccountActivationKey activationKey = new(Guid.NewGuid());
 
             this._repository.Add(createdEvent.Account, activationKey);

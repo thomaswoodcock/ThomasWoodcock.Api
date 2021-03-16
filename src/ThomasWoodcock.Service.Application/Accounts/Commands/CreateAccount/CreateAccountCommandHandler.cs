@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 
 using ThomasWoodcock.Service.Application.Common.Commands;
@@ -40,10 +39,10 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount
         public CreateAccountCommandHandler(ICommandValidator<CreateAccountCommand> validator,
             IAccountCommandRepository repository, IPasswordHasher hasher, IDomainEventPublisher publisher)
         {
-            this._validator = validator ?? throw new ArgumentNullException(nameof(validator));
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            this._hasher = hasher ?? throw new ArgumentNullException(nameof(hasher));
-            this._publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
+            this._validator = validator;
+            this._repository = repository;
+            this._hasher = hasher;
+            this._publisher = publisher;
         }
 
         /// <inheritdoc />
@@ -56,14 +55,14 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount
                 return validationResult;
             }
 
-            Account accountById = await this._repository.GetAsync(command.Id);
+            Account? accountById = await this._repository.GetAsync(command.Id);
 
             if (accountById != null)
             {
                 return Result.Failure(new AccountIdExistsFailure());
             }
 
-            Account accountByEmail = await this._repository.GetAsync(command.EmailAddress);
+            Account? accountByEmail = await this._repository.GetAsync(command.EmailAddress);
 
             if (accountByEmail != null)
             {
@@ -76,6 +75,11 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount
             if (accountResult.IsFailed)
             {
                 return accountResult;
+            }
+
+            if (accountResult.Value == null)
+            {
+                return Result.Failure(new AccountCreationFailure());
             }
 
             this._repository.Add(accountResult.Value);

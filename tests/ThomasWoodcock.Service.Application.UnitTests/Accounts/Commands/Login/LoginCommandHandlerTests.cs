@@ -19,40 +19,6 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Login
 {
     public sealed class LoginCommandHandlerTests
     {
-        public sealed class Constructor : IClassFixture<Fixture>
-        {
-            private readonly Fixture _fixture;
-
-            public Constructor(Fixture fixture)
-            {
-                this._fixture = fixture;
-            }
-
-            [Fact]
-            public void NullValidator_Constructor_ThrowsArgumentNullException()
-            {
-                // Arrange Act Assert
-                Assert.Throws<ArgumentNullException>(() =>
-                    new LoginCommandHandler(null, this._fixture.Repository, this._fixture.Hasher));
-            }
-
-            [Fact]
-            public void NullRepository_Constructor_ThrowsArgumentNullException()
-            {
-                // Arrange Act Assert
-                Assert.Throws<ArgumentNullException>(() =>
-                    new LoginCommandHandler(this._fixture.Validator, null, this._fixture.Hasher));
-            }
-
-            [Fact]
-            public void NullHasher_Constructor_ThrowsArgumentNullException()
-            {
-                // Arrange Act Assert
-                Assert.Throws<ArgumentNullException>(() =>
-                    new LoginCommandHandler(this._fixture.Validator, this._fixture.Repository, null));
-            }
-        }
-
         public sealed class HandleAsync : IClassFixture<Fixture>
         {
             private readonly Fixture _fixture;
@@ -155,7 +121,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Login
 
                 this.Account = Account.Create(new Guid("C8F52736-A492-4606-91BB-AC83241B26C0"), "Test Name",
                         "test@test.com", "HashedPassword")
-                    .Value;
+                    .Value ?? throw new InvalidOperationException();
             }
 
             internal LoginCommandHandler Sut { get; }

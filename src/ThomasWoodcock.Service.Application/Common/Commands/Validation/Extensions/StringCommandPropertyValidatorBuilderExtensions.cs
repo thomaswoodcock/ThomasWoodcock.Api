@@ -24,8 +24,8 @@ namespace ThomasWoodcock.Service.Application.Common.Commands.Validation.Extensio
         /// <returns>
         ///     The <see cref="ICommandPropertyValidatorBuilder{TCommand,TProperty}" /> to enable further rules to be added.
         /// </returns>
-        public static ICommandPropertyValidatorBuilder<T, string> HasMaxLength<T>(
-            this ICommandPropertyValidatorBuilder<T, string> builder, int length)
+        public static ICommandPropertyValidatorBuilder<T, string?> HasMaxLength<T>(
+            this ICommandPropertyValidatorBuilder<T, string?> builder, int length)
             where T : class, ICommand
         {
             return builder.AddRule(property => (property?.Length ?? int.MinValue) <= length,
@@ -48,8 +48,8 @@ namespace ThomasWoodcock.Service.Application.Common.Commands.Validation.Extensio
         /// <returns>
         ///     The <see cref="ICommandPropertyValidatorBuilder{TCommand,TProperty}" /> to enable further rules to be added.
         /// </returns>
-        public static ICommandPropertyValidatorBuilder<T, string> HasMinLength<T>(
-            this ICommandPropertyValidatorBuilder<T, string> builder, int length)
+        public static ICommandPropertyValidatorBuilder<T, string?> HasMinLength<T>(
+            this ICommandPropertyValidatorBuilder<T, string?> builder, int length)
             where T : class, ICommand
         {
             return builder.AddRule(property => property != null && property.Length >= length,

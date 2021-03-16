@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 
 using ThomasWoodcock.Service.Application.Common.Commands;
@@ -36,9 +35,9 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.Login
         public LoginCommandHandler(ICommandValidator<LoginCommand> validator, IAccountCommandRepository repository,
             IPasswordHasher hasher)
         {
-            this._validator = validator ?? throw new ArgumentNullException(nameof(validator));
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            this._hasher = hasher ?? throw new ArgumentNullException(nameof(hasher));
+            this._validator = validator;
+            this._repository = repository;
+            this._hasher = hasher;
         }
 
         /// <inheritdoc />
@@ -51,7 +50,7 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.Login
                 return validationResult;
             }
 
-            Account account = await this._repository.GetAsync(command.EmailAddress);
+            Account? account = await this._repository.GetAsync(command.EmailAddress);
 
             if (account == null)
             {
