@@ -6,6 +6,7 @@ using NSubstitute.ReturnsExtensions;
 
 using ThomasWoodcock.Service.Application.Accounts.Commands;
 using ThomasWoodcock.Service.Application.Accounts.Commands.Login;
+using ThomasWoodcock.Service.Application.Accounts.FailureReasons;
 using ThomasWoodcock.Service.Application.Common.Commands.Validation;
 using ThomasWoodcock.Service.Application.Common.Cryptography;
 using ThomasWoodcock.Service.Domain.Accounts;
@@ -34,7 +35,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Login
                     .Returns(this._fixture.Account);
 
                 this._fixture.Hasher.Verify("HashedPassword", "TestPassword123")
-                    .Returns(Result.Success());
+                    .Returns(true);
             }
 
             [Fact]
@@ -75,10 +76,8 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Login
             public async Task InvalidPassword_HandleAsync_ReturnsFailedResult()
             {
                 // Arrange
-                TestFailure failureReason = new();
-
                 this._fixture.Hasher.Verify("HashedPassword", "TestPassword123")
-                    .Returns(Result.Failure(failureReason));
+                    .Returns(false);
 
                 // Act
                 IResult result = await this._fixture.Sut.HandleAsync(this._fixture.Command);
@@ -86,7 +85,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Login
                 // Assert
                 Assert.True(result.IsFailed);
                 Assert.False(result.IsSuccessful);
-                Assert.IsType<TestFailure>(result.FailureReason);
+                Assert.IsType<IncorrectPasswordFailure>(result.FailureReason);
             }
 
             [Fact]

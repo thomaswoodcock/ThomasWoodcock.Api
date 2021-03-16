@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 
+using ThomasWoodcock.Service.Application.Accounts.FailureReasons;
 using ThomasWoodcock.Service.Application.Common.Commands;
 using ThomasWoodcock.Service.Application.Common.Commands.Validation;
 using ThomasWoodcock.Service.Application.Common.Cryptography;
@@ -57,9 +58,9 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.Login
                 return Result.Failure(new AccountDoesNotExistFailure());
             }
 
-            IResult verificationResult = this._hasher.Verify(account.Password, command.Password);
+            bool passwordsMatch = this._hasher.Verify(account.Password, command.Password);
 
-            return verificationResult.IsFailed ? verificationResult : Result.Success();
+            return passwordsMatch ? Result.Success() : Result.Failure(new IncorrectPasswordFailure());
         }
     }
 }

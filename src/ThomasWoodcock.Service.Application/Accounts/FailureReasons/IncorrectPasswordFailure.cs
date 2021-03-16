@@ -1,6 +1,6 @@
 ﻿using ThomasWoodcock.Service.Domain.SharedKernel.Results.FailureReasons;
 
-namespace ThomasWoodcock.Service.Infrastructure.Cryptography.FailureReasons
+namespace ThomasWoodcock.Service.Application.Accounts.FailureReasons
 {
     /// <inheritdoc cref="InsufficientPermissionsFailure" />
     /// <summary>
