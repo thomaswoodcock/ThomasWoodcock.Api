@@ -16,9 +16,6 @@ namespace ThomasWoodcock.Service.Domain.SeedWork
         /// <param name="id">
         ///     The ID of the domain entity.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///     Thrown if the given <paramref name="id" /> is an empty <see cref="Guid" />.
-        /// </exception>
         private protected Entity(Guid id)
         {
             if (id == Guid.Empty)
