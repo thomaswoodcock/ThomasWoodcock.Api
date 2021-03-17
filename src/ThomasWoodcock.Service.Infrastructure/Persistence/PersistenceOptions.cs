@@ -9,11 +9,11 @@ namespace ThomasWoodcock.Service.Infrastructure.Persistence
         /// <summary>
         ///     Gets or sets the database name to use when connecting via Cosmos DB.
         /// </summary>
-        public string DatabaseName { get; init; }
+        public string? DatabaseName { get; init; }
 
         /// <summary>
         ///     Gets or sets the value indicating whether a local SQLite database should be used instead of Cosmos DB.
         /// </summary>
-        public bool UseSqliteDatabase { get; init; }
+        public bool? UseSqliteDatabase { get; init; }
     }
 }

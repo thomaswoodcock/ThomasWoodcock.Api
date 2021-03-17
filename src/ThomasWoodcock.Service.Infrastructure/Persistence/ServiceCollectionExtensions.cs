@@ -39,11 +39,11 @@ namespace ThomasWoodcock.Service.Infrastructure.Persistence
 
             collection.AddDbContext<T>(builder =>
             {
-                if (options.UseSqliteDatabase)
+                if (options.UseSqliteDatabase == true)
                 {
                     builder.UseSqlite(databaseConnection, opt => opt.MigrationsAssembly(typeof(T).Assembly.FullName));
                 }
-                else
+                else if (options.DatabaseName != null)
                 {
                     builder.UseCosmos(databaseConnection, options.DatabaseName);
                 }
