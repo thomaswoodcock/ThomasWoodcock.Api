@@ -10,7 +10,7 @@ namespace ThomasWoodcock.Service.Application.Common.DomainEvents
     /// <typeparam name="T">
     ///     The type of domain event that will be handled.
     /// </typeparam>
-    internal interface IDomainEventHandler<in T>
+    public interface IDomainEventHandler<in T>
         where T : class, IDomainEvent
     {
         /// <summary>

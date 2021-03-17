@@ -8,7 +8,7 @@ namespace ThomasWoodcock.Service.Application.Common.DomainEvents
     /// <summary>
     ///     Allows a class to act as a publisher of domain events.
     /// </summary>
-    internal interface IDomainEventPublisher
+    public interface IDomainEventPublisher
     {
         /// <summary>
         ///     Publishes one or more domain events.
