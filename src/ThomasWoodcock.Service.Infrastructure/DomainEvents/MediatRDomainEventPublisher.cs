@@ -34,21 +34,16 @@ namespace ThomasWoodcock.Service.Infrastructure.DomainEvents
         {
             foreach (IDomainEvent domainEvent in domainEvents)
             {
-                INotification? notification = CreateNotification(domainEvent);
-
-                if (notification == null)
-                {
-                    continue;
-                }
-
+                INotification notification = CreateNotification(domainEvent);
                 await this._publisher.Publish(notification);
             }
 
-            static INotification? CreateNotification(IDomainEvent domainEvent)
+            static INotification CreateNotification(IDomainEvent domainEvent)
             {
                 Type notificationType = typeof(MediatRDomainEventNotification<>).MakeGenericType(domainEvent.GetType());
 
-                return (INotification?)Activator.CreateInstance(notificationType, domainEvent);
+                return (INotification?)Activator.CreateInstance(notificationType, domainEvent) ??
+                       throw new InvalidOperationException();
             }
         }
     }

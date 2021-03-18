@@ -23,12 +23,12 @@ namespace ThomasWoodcock.Service.Infrastructure.DomainEvents
         /// </param>
         public static void AddDomainEvents(this IServiceCollection collection)
         {
-            collection.AutoRegisterDomainEventHandlers();
+            collection.AutoRegisterDomainEventNotificationHandlers();
 
             collection.AddSingleton<IDomainEventPublisher, MediatRDomainEventPublisher>();
         }
 
-        private static void AutoRegisterDomainEventHandlers(this IServiceCollection collection)
+        private static void AutoRegisterDomainEventNotificationHandlers(this IServiceCollection collection)
         {
             // Gets all domain event handlers.
             IEnumerable<Type> eventHandlers = typeof(IDomainEventHandler<>).Assembly.GetTypes()
@@ -37,11 +37,8 @@ namespace ThomasWoodcock.Service.Infrastructure.DomainEvents
 
             foreach (Type eventHandler in eventHandlers)
             {
-                // Registers the handler.
-                collection.AddScoped(eventHandler);
-
                 Type? eventType = eventHandler.GetInterface("IDomainEventHandler`1")
-                    ?.GenericTypeArguments.First();
+                    ?.GenericTypeArguments[0];
 
                 if (eventType == null)
                 {
