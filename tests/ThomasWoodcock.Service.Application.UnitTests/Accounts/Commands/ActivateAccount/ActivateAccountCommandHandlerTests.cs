@@ -11,14 +11,12 @@ using ThomasWoodcock.Service.Application.Accounts.Commands;
 using ThomasWoodcock.Service.Application.Accounts.Commands.ActivateAccount;
 using ThomasWoodcock.Service.Application.Accounts.Entities;
 using ThomasWoodcock.Service.Application.Accounts.FailureReasons;
-using ThomasWoodcock.Service.Application.Common.Commands.Validation;
 using ThomasWoodcock.Service.Application.Common.DomainEvents;
 using ThomasWoodcock.Service.Domain.Accounts;
 using ThomasWoodcock.Service.Domain.Accounts.DomainEvents;
 using ThomasWoodcock.Service.Domain.Accounts.FailureReasons;
 using ThomasWoodcock.Service.Domain.SeedWork;
 using ThomasWoodcock.Service.Domain.SharedKernel.Results;
-using ThomasWoodcock.Service.Domain.SharedKernel.Results.FailureReasons;
 
 using Xunit;
 
@@ -41,9 +39,6 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
 
                 this._command = new ActivateAccountCommand(this._fixture.AccountId, this._fixture.ActivationKey);
 
-                this._fixture.Validator.Validate(this._command)
-                    .Returns(Result.Success());
-
                 this._fixture.AccountRepository.GetAsync(this._fixture.AccountId)
                     .Returns(this._account);
 
@@ -51,24 +46,6 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
                     .Returns(new AccountActivationKey(this._fixture.ActivationKey));
 
                 this._fixture.Publisher.ClearSubstitute();
-            }
-
-            [Fact]
-            public async Task InvalidCommand_HandleAsync_ReturnsFailedResult()
-            {
-                // Arrange
-                TestFailure testFailure = new();
-
-                this._fixture.Validator.Validate(this._command)
-                    .Returns(Result.Failure(testFailure));
-
-                // Act
-                IResult result = await this._fixture.Sut.HandleAsync(this._command);
-
-                // Assert
-                Assert.True(result.IsFailed);
-                Assert.False(result.IsSuccessful);
-                Assert.Equal(testFailure, result.FailureReason);
             }
 
             [Fact]
@@ -175,10 +152,6 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
             }
         }
 
-        private sealed class TestFailure : IFailureReason
-        {
-        }
-
         public sealed class Fixture
         {
             internal readonly Guid AccountId = new("324A2ECA-1D1E-46FC-98A5-D4A668A07425");
@@ -190,12 +163,9 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.Activat
 
             internal readonly IDomainEventPublisher Publisher = Substitute.For<IDomainEventPublisher>();
 
-            internal readonly ICommandValidator<ActivateAccountCommand> Validator =
-                Substitute.For<ICommandValidator<ActivateAccountCommand>>();
-
             public Fixture()
             {
-                this.Sut = new ActivateAccountCommandHandler(this.Validator, this.AccountRepository, this.KeyRepository,
+                this.Sut = new ActivateAccountCommandHandler(this.AccountRepository, this.KeyRepository,
                     this.Publisher);
             }
 

@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 
 using ThomasWoodcock.Service.Application.Common.Commands;
-using ThomasWoodcock.Service.Application.Common.Commands.Validation;
 using ThomasWoodcock.Service.Application.Common.Cryptography;
 using ThomasWoodcock.Service.Application.Common.DomainEvents;
 using ThomasWoodcock.Service.Domain.Accounts;
@@ -19,14 +18,10 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount
         private readonly IPasswordHasher _hasher;
         private readonly IDomainEventPublisher _publisher;
         private readonly IAccountCommandRepository _repository;
-        private readonly ICommandValidator<CreateAccountCommand> _validator;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="CreateAccountCommandHandler" /> class.
         /// </summary>
-        /// <param name="validator">
-        ///     The <see cref="ICommandValidator{T}" /> used to validate the command.
-        /// </param>
         /// <param name="repository">
         ///     The <see cref="IAccountCommandRepository" /> used to retrieve and add accounts.
         /// </param>
@@ -36,10 +31,9 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount
         /// <param name="publisher">
         ///     The <see cref="IDomainEventPublisher" /> used to publish domain events.
         /// </param>
-        public CreateAccountCommandHandler(ICommandValidator<CreateAccountCommand> validator,
-            IAccountCommandRepository repository, IPasswordHasher hasher, IDomainEventPublisher publisher)
+        public CreateAccountCommandHandler(IAccountCommandRepository repository, IPasswordHasher hasher,
+            IDomainEventPublisher publisher)
         {
-            this._validator = validator;
             this._repository = repository;
             this._hasher = hasher;
             this._publisher = publisher;
@@ -48,13 +42,6 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount
         /// <inheritdoc />
         public async Task<IResult> HandleAsync(CreateAccountCommand command)
         {
-            IResult validationResult = this._validator.Validate(command);
-
-            if (validationResult.IsFailed)
-            {
-                return validationResult;
-            }
-
             Account? accountById = await this._repository.GetAsync(command.Id);
 
             if (accountById != null)

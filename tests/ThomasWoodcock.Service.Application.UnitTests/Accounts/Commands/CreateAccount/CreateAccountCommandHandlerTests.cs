@@ -8,7 +8,6 @@ using NSubstitute.ClearExtensions;
 
 using ThomasWoodcock.Service.Application.Accounts.Commands;
 using ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount;
-using ThomasWoodcock.Service.Application.Common.Commands.Validation;
 using ThomasWoodcock.Service.Application.Common.Cryptography;
 using ThomasWoodcock.Service.Application.Common.DomainEvents;
 using ThomasWoodcock.Service.Domain.Accounts;
@@ -16,7 +15,6 @@ using ThomasWoodcock.Service.Domain.Accounts.DomainEvents;
 using ThomasWoodcock.Service.Domain.Accounts.FailureReasons;
 using ThomasWoodcock.Service.Domain.SeedWork;
 using ThomasWoodcock.Service.Domain.SharedKernel.Results;
-using ThomasWoodcock.Service.Domain.SharedKernel.Results.FailureReasons;
 
 using Xunit;
 
@@ -32,30 +30,12 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
             {
                 this._fixture = fixture;
 
-                this._fixture.Validator.Validate(this._fixture.Command)
-                    .Returns(Result.Success());
-
                 this._fixture.Repository.ClearSubstitute();
 
                 this._fixture.Hasher.Hash("TestPassword123")
                     .Returns("HashedPassword");
 
                 this._fixture.Publisher.ClearSubstitute();
-            }
-
-            [Fact]
-            public async Task InvalidCommand_HandleAsync_ReturnsFailedResult()
-            {
-                // Arrange
-                this._fixture.Validator.Validate(this._fixture.Command)
-                    .Returns(Result.Failure(new TestFailure()));
-
-                // Act
-                IResult result = await this._fixture.Sut.HandleAsync(this._fixture.Command);
-
-                // Assert
-                Assert.True(result.IsFailed);
-                Assert.IsType<TestFailure>(result.FailureReason);
             }
 
             [Fact]
@@ -192,10 +172,6 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
             }
         }
 
-        private sealed class TestFailure : IFailureReason
-        {
-        }
-
         public sealed class Fixture
         {
             internal readonly Guid AccountId = new("019769F1-4197-4779-89C2-D764FE8AA8EB");
@@ -204,13 +180,9 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.Commands.CreateA
 
             internal readonly IAccountCommandRepository Repository = Substitute.For<IAccountCommandRepository>();
 
-            internal readonly ICommandValidator<CreateAccountCommand> Validator =
-                Substitute.For<ICommandValidator<CreateAccountCommand>>();
-
             public Fixture()
             {
-                this.Sut = new CreateAccountCommandHandler(this.Validator, this.Repository, this.Hasher,
-                    this.Publisher);
+                this.Sut = new CreateAccountCommandHandler(this.Repository, this.Hasher, this.Publisher);
 
                 this.Command =
                     new CreateAccountCommand(this.AccountId, "Test Account", "test@test.com", "TestPassword123");
