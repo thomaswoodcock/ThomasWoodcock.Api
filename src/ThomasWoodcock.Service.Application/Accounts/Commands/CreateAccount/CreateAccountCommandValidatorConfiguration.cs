@@ -8,10 +8,11 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.CreateAccount
     ///     An implementation of the <see cref="ICommandValidatorConfiguration{T}" /> used to configure validators for
     ///     <see cref="CreateAccountCommand" /> objects.
     /// </summary>
-    internal sealed class CreateAccountCommandValidatorConfiguration : ICommandValidatorConfiguration<CreateAccountCommand>
+    internal sealed class
+        CreateAccountCommandValidatorConfiguration : ICommandValidatorConfiguration<CreateAccountCommand>
     {
         /// <inheritdoc />
-        public void Configure(CommandValidatorBuilder<CreateAccountCommand> builder)
+        public void Configure(ICommandValidatorBuilder<CreateAccountCommand> builder)
         {
             builder.Property(command => command.Id)
                 .IsRequired();

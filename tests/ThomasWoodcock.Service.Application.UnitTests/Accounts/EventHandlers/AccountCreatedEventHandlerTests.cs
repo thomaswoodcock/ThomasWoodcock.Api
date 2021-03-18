@@ -18,29 +18,6 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.EventHandlers
 {
     public sealed class AccountCreatedEventHandlerTests
     {
-        public sealed class Constructor
-        {
-            [Fact]
-            public void NullRepository_Constructor_ThrowsArgumentNullException()
-            {
-                // Arrange
-                var sender = Substitute.For<INotificationSender>();
-
-                // Act Assert
-                Assert.Throws<ArgumentNullException>(() => new AccountCreatedEventHandler(null, sender));
-            }
-
-            [Fact]
-            public void NullSender_Constructor_ThrowsArgumentNullException()
-            {
-                // Arrange
-                var repository = Substitute.For<IAccountActivationKeyRepository>();
-
-                // Act Assert
-                Assert.Throws<ArgumentNullException>(() => new AccountCreatedEventHandler(repository, null));
-            }
-        }
-
         public sealed class HandleAsync : IClassFixture<Fixture>
         {
             private readonly Fixture _fixture;
@@ -51,13 +28,6 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.EventHandlers
 
                 this._fixture.Repository.ClearSubstitute();
                 this._fixture.Sender.ClearSubstitute();
-            }
-
-            [Fact]
-            public async Task NullEvent_HandleAsync_ThrowsArgumentNullException()
-            {
-                // Arrange Act Assert
-                await Assert.ThrowsAsync<ArgumentNullException>(() => this._fixture.Sut.HandleAsync(null));
             }
 
             [Fact]
@@ -101,7 +71,7 @@ namespace ThomasWoodcock.Service.Application.UnitTests.Accounts.EventHandlers
 
                 this.Account = Account.Create(new Guid("CC6D73DF-745B-4C36-BA5E-CDFA4CBEF2B0"), "Test Name",
                         "test@test.com", "TestPassword123")
-                    .Value;
+                    .Value ?? throw new InvalidOperationException();
             }
 
             internal AccountCreatedEventHandler Sut { get; }

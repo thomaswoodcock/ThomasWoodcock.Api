@@ -1,8 +1,13 @@
+using MediatR;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using ThomasWoodcock.Service.Infrastructure.Cryptography;
+using ThomasWoodcock.Service.Infrastructure.DomainEvents;
+using ThomasWoodcock.Service.Infrastructure.Notifications;
 using ThomasWoodcock.Service.Infrastructure.Persistence;
+using ThomasWoodcock.Service.Infrastructure.Requests;
 
 namespace ThomasWoodcock.Service.Infrastructure
 {
@@ -23,7 +28,12 @@ namespace ThomasWoodcock.Service.Infrastructure
         public static void AddInfrastructure(this IServiceCollection collection, IConfiguration configuration)
         {
             collection.AddCryptography();
+            collection.AddDomainEvents();
+            collection.AddNotifications();
             collection.AddPersistence(configuration);
+            collection.AddRequests();
+
+            collection.AddMediatR(typeof(ServiceCollectionExtensions));
         }
     }
 }

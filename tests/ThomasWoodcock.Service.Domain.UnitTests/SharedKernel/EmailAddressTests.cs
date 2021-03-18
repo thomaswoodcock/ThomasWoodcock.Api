@@ -20,7 +20,7 @@ namespace ThomasWoodcock.Service.Domain.UnitTests.SharedKernel
                 Assert.True(emailResult.IsSuccessful);
                 Assert.False(emailResult.IsFailed);
                 Assert.Null(emailResult.FailureReason);
-                Assert.Equal("test@test.com", emailResult.Value.ToString());
+                Assert.Equal("test@test.com", emailResult.Value?.ToString());
             }
 
             [Theory]

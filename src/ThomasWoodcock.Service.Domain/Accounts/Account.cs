@@ -1,3 +1,5 @@
+#pragma warning disable 8618
+
 using System;
 
 using ThomasWoodcock.Service.Domain.Accounts.DomainEvents;
@@ -15,8 +17,27 @@ namespace ThomasWoodcock.Service.Domain.Accounts
     public sealed class Account : Entity
     {
         /// <inheritdoc />
-        private Account()
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="Account" /> class.
+        /// </summary>
+        /// <param name="id">
+        ///     The ID of the account.
+        /// </param>
+        /// <param name="name">
+        ///     The name associated with the account.
+        /// </param>
+        /// <param name="password">
+        ///     The password for the account.
+        /// </param>
+        /// <param name="isActive">
+        ///     The value that determines whether the account is active.
+        /// </param>
+        private Account(Guid id, string name, string password, bool isActive)
+            : base(id)
         {
+            this.Name = name;
+            this.Password = password;
+            this.IsActive = isActive;
         }
 
         /// <inheritdoc />
@@ -36,12 +57,9 @@ namespace ThomasWoodcock.Service.Domain.Accounts
         ///     The password for the account.
         /// </param>
         private Account(Guid id, string name, EmailAddress emailAddress, string password)
-            : base(id)
+            : this(id, name, password, false)
         {
-            this.Name = name;
             this.EmailAddress = emailAddress;
-            this.Password = password;
-            this.IsActive = false;
 
             this.RaiseDomainEvent(new AccountCreatedEvent(this));
         }
@@ -117,7 +135,7 @@ namespace ThomasWoodcock.Service.Domain.Accounts
 
             IResult<EmailAddress> emailResult = EmailAddress.Create(emailAddress);
 
-            if (emailResult.IsFailed)
+            if (emailResult.IsFailed || emailResult.Value == null)
             {
                 return Result.Failure<Account>(new InvalidAccountEmailFailure());
             }

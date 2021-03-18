@@ -3,7 +3,7 @@
 namespace ThomasWoodcock.Service.Application.Common.Commands.Validation.Extensions
 {
     /// <summary>
-    ///     Extension methods for <see cref="CommandPropertyValidatorBuilder{TCommand,TProperty}" /> that interact with
+    ///     Extension methods for <see cref="ICommandPropertyValidatorBuilder{TCommand,TProperty}" /> that interact with
     ///     <see cref="Guid" /> properties.
     /// </summary>
     internal static class GuidCommandPropertyValidatorBuilderExtensions
@@ -18,10 +18,10 @@ namespace ThomasWoodcock.Service.Application.Common.Commands.Validation.Extensio
         ///     The type of command whose property will be validated.
         /// </typeparam>
         /// <returns>
-        ///     The <see cref="CommandPropertyValidatorBuilder{TCommand,TProperty}" /> to enable further rules to be added.
+        ///     The <see cref="ICommandPropertyValidatorBuilder{TCommand,TProperty}" /> to enable further rules to be added.
         /// </returns>
-        public static CommandPropertyValidatorBuilder<T, Guid> IsRequired<T>(
-            this CommandPropertyValidatorBuilder<T, Guid> builder)
+        public static ICommandPropertyValidatorBuilder<T, Guid> IsRequired<T>(
+            this ICommandPropertyValidatorBuilder<T, Guid> builder)
             where T : class, ICommand
         {
             return builder.AddRule(property => property != Guid.Empty,

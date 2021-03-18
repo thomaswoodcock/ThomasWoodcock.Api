@@ -24,17 +24,6 @@ namespace ThomasWoodcock.Service.Infrastructure.UnitTests.Persistence.Accounts
             }
 
             [Fact]
-            public async Task NullAccount_GetAsync_ThrowsArgumentNullException()
-            {
-                // Arrange
-                await using AccountContext context = new(this._fixture.ContextOptions);
-                EfAccountActivationKeyRepository sut = new(context);
-
-                // Act Assert
-                await Assert.ThrowsAsync<ArgumentNullException>(() => sut.GetAsync(null));
-            }
-
-            [Fact]
             public async Task ValidAccount_GetAsync_ReturnsActivationKey()
             {
                 // Arrange
@@ -42,10 +31,10 @@ namespace ThomasWoodcock.Service.Infrastructure.UnitTests.Persistence.Accounts
                 EfAccountActivationKeyRepository sut = new(context);
 
                 // Act
-                AccountActivationKey key = await sut.GetAsync(this._fixture.Account);
+                AccountActivationKey? key = await sut.GetAsync(this._fixture.Account);
 
                 // Assert
-                Assert.Equal(this._fixture.ActivationKey.Value, key.Value);
+                Assert.Equal(this._fixture.ActivationKey.Value, key?.Value);
             }
 
             [Fact]
@@ -57,10 +46,10 @@ namespace ThomasWoodcock.Service.Infrastructure.UnitTests.Persistence.Accounts
 
                 Account account = Account.Create(new Guid("6B6DE9BB-75E9-4948-ABE6-D91B9CFC41E4"), "Test Name",
                         "test@test.com", "TestPassword123")
-                    .Value;
+                    .Value ?? throw new InvalidOperationException();
 
                 // Act
-                AccountActivationKey key = await sut.GetAsync(account);
+                AccountActivationKey? key = await sut.GetAsync(account);
 
                 // Assert
                 Assert.Null(key);
@@ -75,28 +64,6 @@ namespace ThomasWoodcock.Service.Infrastructure.UnitTests.Persistence.Accounts
             public Add(EfAccountDatabaseFixture fixture)
             {
                 this._fixture = fixture;
-            }
-
-            [Fact]
-            public void NullAccount_Add_ThrowsArgumentNullException()
-            {
-                // Arrange
-                using AccountContext context = new(this._fixture.ContextOptions);
-                EfAccountActivationKeyRepository sut = new(context);
-
-                // Act Assert
-                Assert.Throws<ArgumentNullException>(() => sut.Add(null, this._fixture.ActivationKey));
-            }
-
-            [Fact]
-            public void NullActivationKey_Add_ThrowsArgumentNullException()
-            {
-                // Arrange
-                using AccountContext context = new(this._fixture.ContextOptions);
-                EfAccountActivationKeyRepository sut = new(context);
-
-                // Act Assert
-                Assert.Throws<ArgumentNullException>(() => sut.Add(this._fixture.Account, null));
             }
 
             [Fact]
@@ -128,17 +95,6 @@ namespace ThomasWoodcock.Service.Infrastructure.UnitTests.Persistence.Accounts
             public Remove(EfAccountDatabaseFixture fixture)
             {
                 this._fixture = fixture;
-            }
-
-            [Fact]
-            public void NullActivationKey_Remove_ThrowsArgumentNullException()
-            {
-                // Arrange
-                using AccountContext context = new(this._fixture.ContextOptions);
-                EfAccountActivationKeyRepository sut = new(context);
-
-                // Act Assert
-                Assert.Throws<ArgumentNullException>(() => sut.Remove(null));
             }
 
             [Fact]

@@ -1,10 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using Microsoft.Extensions.DependencyInjection;
-
-using ThomasWoodcock.Service.Application.Common.Commands.Validation;
 
 namespace ThomasWoodcock.Service.Application.Common.Commands
 {
@@ -22,22 +20,21 @@ namespace ThomasWoodcock.Service.Application.Common.Commands
         public static void AddCommands(this IServiceCollection collection)
         {
             collection.AutoRegisterCommandHandlers();
-            collection.AddCommandValidation();
 
-            collection.AddScoped<ICommandSender, CommandSender>();
+            collection.AddSingleton<ICommandSender, CommandSender>();
         }
 
         private static void AutoRegisterCommandHandlers(this IServiceCollection collection)
         {
-            // Get all types that implement handler interface.
-            IEnumerable<Type> handlerTypes = typeof(ServiceCollectionExtensions).Assembly.GetTypes()
+            // Gets all command handlers.
+            IEnumerable<Type> commandHandlers = typeof(ServiceCollectionExtensions).Assembly.GetTypes()
                 .Where(type => type.GetInterfaces()
                     .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommandHandler<>)));
 
-            foreach (Type handlerType in handlerTypes)
+            foreach (Type commandHandler in commandHandlers)
             {
-                // Register handler.
-                collection.AddScoped(typeof(ICommandHandler), handlerType);
+                // Registers the handler.
+                collection.AddScoped(commandHandler);
             }
         }
     }

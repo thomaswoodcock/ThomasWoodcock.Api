@@ -25,11 +25,11 @@ namespace ThomasWoodcock.Service.Infrastructure.Persistence.Accounts
         /// </param>
         public EfAccountCommandRepository(AccountContext context)
         {
-            this._context = context ?? throw new ArgumentNullException(nameof(context));
+            this._context = context;
         }
 
         /// <inheritdoc />
-        public async Task<Account> GetAsync(Guid id)
+        public async Task<Account?> GetAsync(Guid id)
         {
             if (id == Guid.Empty)
             {
@@ -40,7 +40,7 @@ namespace ThomasWoodcock.Service.Infrastructure.Persistence.Accounts
         }
 
         /// <inheritdoc />
-        public async Task<Account> GetAsync(string emailAddress)
+        public async Task<Account?> GetAsync(string emailAddress)
         {
             if (string.IsNullOrWhiteSpace(emailAddress))
             {
@@ -54,11 +54,6 @@ namespace ThomasWoodcock.Service.Infrastructure.Persistence.Accounts
         /// <inheritdoc />
         public void Add(Account account)
         {
-            if (account == null)
-            {
-                throw new ArgumentNullException(nameof(account));
-            }
-
             this._context.Accounts.Add(account);
         }
 

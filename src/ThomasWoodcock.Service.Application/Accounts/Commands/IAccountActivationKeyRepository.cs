@@ -19,7 +19,7 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands
         /// <returns>
         ///     An activation key.
         /// </returns>
-        Task<AccountActivationKey> GetAsync(Account account);
+        Task<AccountActivationKey?> GetAsync(Account account);
 
         /// <summary>
         ///     Adds an activation key to the repository.

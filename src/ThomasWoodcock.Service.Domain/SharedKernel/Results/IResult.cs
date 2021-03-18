@@ -10,17 +10,17 @@ namespace ThomasWoodcock.Service.Domain.SharedKernel.Results
         /// <summary>
         ///     Gets the value that determines whether the operation was successful.
         /// </summary>
-        bool IsSuccessful { get; }
+        bool IsSuccessful => !this.IsFailed;
 
         /// <summary>
         ///     Gets the value that determines whether the operation failed.
         /// </summary>
-        bool IsFailed { get; }
+        bool IsFailed => this.FailureReason != null;
 
         /// <summary>
         ///     Gets the <see cref="IFailureReason" /> that determines why the operation failed.
         /// </summary>
-        IFailureReason FailureReason { get; }
+        IFailureReason? FailureReason { get; }
     }
 
     /// <inheritdoc />
@@ -32,6 +32,6 @@ namespace ThomasWoodcock.Service.Domain.SharedKernel.Results
         /// <summary>
         ///     Gets the value contained within the result.
         /// </summary>
-        T Value { get; }
+        T? Value { get; }
     }
 }

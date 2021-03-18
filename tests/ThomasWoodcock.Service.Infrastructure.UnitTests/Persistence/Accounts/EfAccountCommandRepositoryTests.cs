@@ -12,16 +12,6 @@ namespace ThomasWoodcock.Service.Infrastructure.UnitTests.Persistence.Accounts
 {
     public sealed class EfAccountCommandRepositoryTests
     {
-        public sealed class Constructor
-        {
-            [Fact]
-            public void NullContext_Constructor_ThrowsArgumentNullException()
-            {
-                // Arrange Act Assert
-                Assert.Throws<ArgumentNullException>(() => new EfAccountCommandRepository(null));
-            }
-        }
-
         [Collection("EfAccountDatabaseCollection")]
         public sealed class GetAsync
         {
@@ -66,7 +56,7 @@ namespace ThomasWoodcock.Service.Infrastructure.UnitTests.Persistence.Accounts
                 EfAccountCommandRepository sut = new(context);
 
                 // Act
-                Account account = await sut.GetAsync(this._fixture.Account.Id);
+                Account account = await sut.GetAsync(this._fixture.Account.Id) ?? throw new InvalidOperationException();
 
                 // Assert
                 Assert.Equal(this._fixture.Account.Id, account.Id);
@@ -84,7 +74,7 @@ namespace ThomasWoodcock.Service.Infrastructure.UnitTests.Persistence.Accounts
                 EfAccountCommandRepository sut = new(context);
 
                 // Act
-                Account account = await sut.GetAsync(new Guid("4D492A26-3DC8-45D6-828B-0917DCC18213"));
+                Account? account = await sut.GetAsync(new Guid("4D492A26-3DC8-45D6-828B-0917DCC18213"));
 
                 // Assert
                 Assert.Null(account);
@@ -98,7 +88,8 @@ namespace ThomasWoodcock.Service.Infrastructure.UnitTests.Persistence.Accounts
                 EfAccountCommandRepository sut = new(context);
 
                 // Act
-                Account account = await sut.GetAsync(this._fixture.Account.EmailAddress.ToString());
+                Account account = await sut.GetAsync(this._fixture.Account.EmailAddress.ToString()) ??
+                                  throw new InvalidOperationException();
 
                 // Assert
                 Assert.Equal(this._fixture.Account.Id, account.Id);
@@ -116,7 +107,7 @@ namespace ThomasWoodcock.Service.Infrastructure.UnitTests.Persistence.Accounts
                 EfAccountCommandRepository sut = new(context);
 
                 // Act
-                Account account = await sut.GetAsync("fake@fake.com");
+                Account? account = await sut.GetAsync("fake@fake.com");
 
                 // Assert
                 Assert.Null(account);
@@ -134,17 +125,6 @@ namespace ThomasWoodcock.Service.Infrastructure.UnitTests.Persistence.Accounts
             }
 
             [Fact]
-            public void NullAccount_Add_ThrowsArgumentNullException()
-            {
-                // Arrange
-                using AccountContext context = new(this._fixture.ContextOptions);
-                EfAccountCommandRepository sut = new(context);
-
-                // Act Assert
-                Assert.Throws<ArgumentNullException>(() => sut.Add(null));
-            }
-
-            [Fact]
             public async Task ValidAccount_Add_AddsAccountToRepository()
             {
                 // Arrange
@@ -153,7 +133,7 @@ namespace ThomasWoodcock.Service.Infrastructure.UnitTests.Persistence.Accounts
 
                 Account newAccount = Account.Create(new Guid("6B6DE9BB-75E9-4948-ABE6-D91B9CFC41E4"), "Test Name",
                         "test@test.com", "TestPassword123")
-                    .Value;
+                    .Value ?? throw new InvalidOperationException();
 
                 // Act
                 sut.Add(newAccount);

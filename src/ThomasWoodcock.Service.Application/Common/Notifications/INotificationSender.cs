@@ -5,7 +5,7 @@ namespace ThomasWoodcock.Service.Application.Common.Notifications
     /// <summary>
     ///     Allows a class to act as a service that sends notifications to users.
     /// </summary>
-    internal interface INotificationSender
+    public interface INotificationSender
     {
         /// <summary>
         ///     Sends a notification.

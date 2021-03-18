@@ -12,7 +12,7 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.ActivateAccount
         ActivateAccountCommandValidatorConfiguration : ICommandValidatorConfiguration<ActivateAccountCommand>
     {
         /// <inheritdoc />
-        public void Configure(CommandValidatorBuilder<ActivateAccountCommand> builder)
+        public void Configure(ICommandValidatorBuilder<ActivateAccountCommand> builder)
         {
             builder.Property(command => command.AccountId)
                 .IsRequired();

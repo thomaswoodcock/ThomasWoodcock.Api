@@ -1,4 +1,4 @@
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 using ThomasWoodcock.Service.Application.Common.Cryptography;
 
@@ -17,8 +17,7 @@ namespace ThomasWoodcock.Service.Infrastructure.Cryptography
         /// </param>
         public static void AddCryptography(this IServiceCollection collection)
         {
-            collection.AddSingleton<IRandomNumberGenerator, RandomNumberGenerator>();
-            collection.AddSingleton<IPasswordHasher, PasswordHasher>();
+            collection.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
         }
     }
 }

@@ -45,16 +45,6 @@ namespace ThomasWoodcock.Service.Domain.UnitTests.SeedWork
             }
 
             [Fact]
-            public void NullDomainEvent_RaiseDomainEvent_ThrowsArgumentNullException()
-            {
-                // Arrange
-                TestEntity sut = new(this._fixture.EntityId);
-
-                // Act Assert
-                Assert.Throws<ArgumentNullException>(() => sut.Raise(null));
-            }
-
-            [Fact]
             public void DomainEvent_RaiseDomainEvent_AddsDomainEvent()
             {
                 // Arrange

@@ -11,21 +11,11 @@ namespace ThomasWoodcock.Service.Domain.SeedWork
         private readonly List<IDomainEvent> _domainEvents = new();
 
         /// <summary>
-        ///     Allows an ORM to initialize the entity.
-        /// </summary>
-        private protected Entity()
-        {
-        }
-
-        /// <summary>
         ///     Initializes a new instance of the <see cref="Entity" /> class.
         /// </summary>
         /// <param name="id">
         ///     The ID of the domain entity.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///     Thrown if the given <paramref name="id" /> is an empty <see cref="Guid" />.
-        /// </exception>
         private protected Entity(Guid id)
         {
             if (id == Guid.Empty)
@@ -54,11 +44,6 @@ namespace ThomasWoodcock.Service.Domain.SeedWork
         /// </param>
         private protected void RaiseDomainEvent(IDomainEvent domainEvent)
         {
-            if (domainEvent == null)
-            {
-                throw new ArgumentNullException(nameof(domainEvent));
-            }
-
             this._domainEvents.Add(domainEvent);
         }
     }

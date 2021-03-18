@@ -1,10 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using Microsoft.Extensions.DependencyInjection;
-
-using ThomasWoodcock.Service.Application.Common.Notifications;
 
 namespace ThomasWoodcock.Service.Application.Common.DomainEvents
 {
@@ -21,24 +19,20 @@ namespace ThomasWoodcock.Service.Application.Common.DomainEvents
         /// </param>
         public static void AddDomainEvents(this IServiceCollection collection)
         {
-            // TODO: Remove when notifications implemented.
-            collection.AddSingleton<INotificationSender, NotificationSender>();
-
-            collection.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
-            collection.AutoRegisterEventHandlers();
+            collection.AutoRegisterDomainEventHandlers();
         }
 
-        private static void AutoRegisterEventHandlers(this IServiceCollection collection)
+        private static void AutoRegisterDomainEventHandlers(this IServiceCollection collection)
         {
-            // Get all types that implement handler interface.
-            IEnumerable<Type> handlerTypes = typeof(ServiceCollectionExtensions).Assembly.GetTypes()
+            // Gets all domain event handlers.
+            IEnumerable<Type> eventHandlers = typeof(IServiceCollection).Assembly.GetTypes()
                 .Where(type => type.GetInterfaces()
                     .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IDomainEventHandler<>)));
 
-            foreach (Type handlerType in handlerTypes)
+            foreach (Type eventHandler in eventHandlers)
             {
-                // Register handler.
-                collection.AddScoped(typeof(IDomainEventHandler), handlerType);
+                // Registers the handler.
+                collection.AddScoped(eventHandler);
             }
         }
     }

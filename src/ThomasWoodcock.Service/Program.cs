@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 
+using Autofac.Extensions.DependencyInjection;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +34,7 @@ namespace ThomasWoodcock.Service
         private static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(builder => builder.UseStartup<Startup>());
         }
     }

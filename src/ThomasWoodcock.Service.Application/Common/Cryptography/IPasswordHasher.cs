@@ -1,5 +1,3 @@
-using ThomasWoodcock.Service.Domain.SharedKernel.Results;
-
 namespace ThomasWoodcock.Service.Application.Common.Cryptography
 {
     /// <summary>
@@ -28,8 +26,8 @@ namespace ThomasWoodcock.Service.Application.Common.Cryptography
         ///     The plain password to match against the hashed password.
         /// </param>
         /// <returns>
-        ///     An <see cref="IResult" /> indicating whether the passwords were verified successfully.
+        ///     A <see cref="bool" /> indicating whether the passwords were verified successfully.
         /// </returns>
-        IResult Verify(string hashedPassword, string plainPassword);
+        bool Verify(string hashedPassword, string plainPassword);
     }
 }

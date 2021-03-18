@@ -7,34 +7,31 @@ using ThomasWoodcock.Service.Domain.SharedKernel.Results.FailureReasons;
 
 namespace ThomasWoodcock.Service.Domain.SharedKernel
 {
+    /// <inheritdoc />
     /// <summary>
     ///     Represents an email address.
     /// </summary>
-    public sealed class EmailAddress
+    public sealed partial record EmailAddress
     {
         private readonly string _value;
 
         /// <summary>
-        ///     Allows an ORM to initialize the <see cref="EmailAddress" /> class.
-        /// </summary>
-        private EmailAddress()
-        {
-        }
-
-        /// <summary>
         ///     Initializes a new instance of the <see cref="EmailAddress" /> class.
         /// </summary>
-        /// <param name="emailAddress">
-        ///     The email address with which to initialize the <see cref="EmailAddress" />.
+        /// <param name="value">
+        ///     The value with which to initialize the <see cref="EmailAddress" />.
         /// </param>
-        private EmailAddress(string emailAddress)
+        private EmailAddress(string value)
         {
-            this._value = emailAddress;
+            this._value = value;
         }
 
         /// <inheritdoc />
         public override string ToString() => this._value;
+    }
 
+    public sealed partial record EmailAddress
+    {
         /// <summary>
         ///     Creates an <see cref="EmailAddress" />.
         /// </summary>
@@ -52,6 +49,15 @@ namespace ThomasWoodcock.Service.Domain.SharedKernel
                 ? Result.Failure<EmailAddress>(new InvalidFormatFailure())
                 : Result.Success(new EmailAddress(emailAddress));
 
+        /// <summary>
+        ///     Determines whether a given <paramref name="emailAddress" /> is in a valid email address format.
+        /// </summary>
+        /// <param name="emailAddress">
+        ///     The email address to validate.
+        /// </param>
+        /// <returns>
+        ///     A value that indicates whether the given <paramref name="emailAddress" /> is  in a valid email address format.
+        /// </returns>
         public static bool IsValid(string emailAddress)
         {
             if (string.IsNullOrWhiteSpace(emailAddress))
