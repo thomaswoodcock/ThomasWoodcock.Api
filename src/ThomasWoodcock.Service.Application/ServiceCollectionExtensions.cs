@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
+using ThomasWoodcock.Service.Application.Common.Commands;
 using ThomasWoodcock.Service.Application.Common.DomainEvents;
 
 namespace ThomasWoodcock.Service.Application
@@ -17,6 +18,7 @@ namespace ThomasWoodcock.Service.Application
         /// </param>
         public static void AddApplication(this IServiceCollection collection)
         {
+            collection.AddCommands();
             collection.AddDomainEvents();
         }
     }

@@ -7,6 +7,7 @@ using ThomasWoodcock.Service.Infrastructure.Cryptography;
 using ThomasWoodcock.Service.Infrastructure.DomainEvents;
 using ThomasWoodcock.Service.Infrastructure.Notifications;
 using ThomasWoodcock.Service.Infrastructure.Persistence;
+using ThomasWoodcock.Service.Infrastructure.Requests;
 
 namespace ThomasWoodcock.Service.Infrastructure
 {
@@ -30,6 +31,7 @@ namespace ThomasWoodcock.Service.Infrastructure
             collection.AddDomainEvents();
             collection.AddNotifications();
             collection.AddPersistence(configuration);
+            collection.AddRequests();
 
             collection.AddMediatR(typeof(ServiceCollectionExtensions));
         }
