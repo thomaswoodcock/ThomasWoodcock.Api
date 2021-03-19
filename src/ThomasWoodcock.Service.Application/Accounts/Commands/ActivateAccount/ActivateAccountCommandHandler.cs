@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 
 using ThomasWoodcock.Service.Application.Accounts.Entities;
@@ -43,21 +44,23 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.ActivateAccount
         /// <inheritdoc />
         public async Task<IResult> HandleAsync(ActivateAccountCommand command)
         {
-            Account? account = await this._accountRepository.GetAsync(command.AccountId);
+            (Guid accountId, Guid activationKey) = command;
+
+            Account? account = await this._accountRepository.GetAsync(accountId);
 
             if (account == null)
             {
                 return Result.Failure(new AccountDoesNotExistFailure());
             }
 
-            AccountActivationKey? activationKey = await this._keyRepository.GetAsync(account);
+            AccountActivationKey? existingActivationKey = await this._keyRepository.GetAsync(account);
 
-            if (activationKey == null)
+            if (existingActivationKey == null)
             {
                 return Result.Failure(new ActivationKeyDoesNotExistFailure());
             }
 
-            if (activationKey.Value != command.ActivationKey)
+            if (existingActivationKey.Value != activationKey)
             {
                 return Result.Failure(new IncorrectActivationKeyFailure());
             }

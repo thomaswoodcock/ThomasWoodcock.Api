@@ -37,14 +37,16 @@ namespace ThomasWoodcock.Service.Application.Accounts.Commands.Login
         /// <inheritdoc />
         public async Task<IResult> HandleAsync(LoginCommand command)
         {
-            Account? account = await this._repository.GetAsync(command.EmailAddress);
+            (string emailAddress, string password) = command;
+
+            Account? account = await this._repository.GetAsync(emailAddress);
 
             if (account == null)
             {
                 return Result.Failure(new AccountDoesNotExistFailure());
             }
 
-            bool passwordsMatch = this._hasher.Verify(account.Password, command.Password);
+            bool passwordsMatch = this._hasher.Verify(account.Password, password);
 
             return passwordsMatch ? Result.Success() : Result.Failure(new IncorrectPasswordFailure());
         }
