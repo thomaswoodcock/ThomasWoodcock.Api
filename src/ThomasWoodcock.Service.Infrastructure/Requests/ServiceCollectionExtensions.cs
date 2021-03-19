@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using MediatR;
+
 using Microsoft.Extensions.DependencyInjection;
 
 using ThomasWoodcock.Service.Application.Common.Requests;
@@ -23,15 +25,18 @@ namespace ThomasWoodcock.Service.Infrastructure.Requests
         {
             collection.AutoRegisterRequestHandlers();
 
+            collection.AddScoped(typeof(IPipelineBehavior<,>), typeof(MediatRRequestPipelineFilterBehavior<,>));
             collection.AddSingleton<IRequestSender, MediatRRequestSender>();
         }
 
         private static void AutoRegisterRequestHandlers(this IServiceCollection collection)
         {
             // Gets all application request handlers.
-            IEnumerable<Type> requestHandlers = typeof(IRequestHandler<,>).Assembly.GetTypes()
+            IEnumerable<Type> requestHandlers = typeof(Application.Common.Requests.IRequestHandler<,>).Assembly
+                .GetTypes()
                 .Where(type => !type.IsAbstract && type.GetInterfaces()
-                    .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequestHandler<,>)));
+                    .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() ==
+                        typeof(Application.Common.Requests.IRequestHandler<,>)));
 
             foreach (Type requestHandler in requestHandlers)
             {
